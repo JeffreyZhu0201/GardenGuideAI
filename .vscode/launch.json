@@ -15,6 +15,21 @@
                 "--reload"
             ],
             "jinja": true
+        },
+        {
+        "name": "RUN GardenGuideAI Expo",
+        "request": "launch",
+        "cwd": "${workspaceFolder}/GardenGuideAI",    
+        "type": "node",
+        "program": "${workspaceFolder}/GardenGuideAI/node_modules/expo/bin/cli",
+        "args": [
+            "start"
+        ],
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "skipFiles": [
+            "<node_internals>/**"
+        ]
         }
     ]
 }
