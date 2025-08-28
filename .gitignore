@@ -6,7 +6,7 @@ __pycache__/
 
 # dependencies
 node_modules/
-
+FloraAPI/app/data/
 # Expo
 .expo/
 dist/
