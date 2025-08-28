@@ -2,7 +2,7 @@
 Author: JeffreyZhu 1624410543@qq.com
 Date: 2025-08-28 09:34:13
 LastEditors: JeffreyZhu 1624410543@qq.com
-LastEditTime: 2025-08-28 11:13:43
+LastEditTime: 2025-08-28 11:18:14
 FilePath: /GardenGuideAI/FloraAPI/app/model.py
 Description: 
 
