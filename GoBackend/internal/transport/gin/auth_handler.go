@@ -1,0 +1,69 @@
+/*
+ * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @Date: 2025-08-29 03:38:10
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-08-29 03:58:28
+ * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/auth_handler.go
+ * @Description:
+ * 定义认证处理程序
+ * 处理用户注册、登录、注销等认证相关的请求
+ *
+ * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ */
+
+ package gin
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/internal/domain"
+	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/internal/service"
+)
+
+type AuthHandler struct {
+	authService *service.AuthService
+}
+
+func NewAuthHandler(authService *service.AuthService) *AuthHandler {
+	return &AuthHandler{authService: authService}
+}
+
+// Register 用户注册
+func (h *AuthHandler) Register(c *gin.Context) {
+	var req domain.RegisterRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if err := h.authService.Register(c.Request.Context(), &req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"message": "用户注册成功"})
+}
+
+// Login 用户登录
+func (h *AuthHandler) Login(c *gin.Context) {
+	var req domain.LoginRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	token, err := h.authService.Login(c.Request.Context(), &req)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, domain.LoginResponse{Token: token})
+}
+
+// Logout 用户退出登录
+func (h *AuthHandler) Logout(c *gin.Context) {
+	// 在实际应用中，可以将JWT令牌加入黑名单
+	c.JSON(http.StatusOK, gin.H{"message": "成功退出登录"})
+}
