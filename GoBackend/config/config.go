@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:26:33
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 03:56:46
+ * @LastEditTime: 2025-08-29 06:45:45
  * @FilePath: /GardenGuideAI/GoBackend/config/config.go
  * @Description:
  * 定义配置结构体
@@ -11,38 +11,76 @@
  * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
  */
 
+// ... 保留文件头注释 ...
+
 package config
 
 import (
+	"os"
 	"time"
 
-	"github.com/caarlos0/env/v10"
+	"github.com/joho/godotenv"
 )
 
 type Config struct {
 	Server struct {
-		Port string `env:"PORT" env-default:"8080"`
+		Port string
 	}
-
 	DB struct {
-		DSN string `env:"DB_DSN" env-default:"root:password@tcp(localhost:3306)/gardenguide?charset=utf8mb4&parseTime=True"`
+		DSN string
 	}
-
 	JWT struct {
-		SecretKey  string        `env:"JWT_SECRET" env-default:"my_secret_key_for_jwt"`
-		Expiration time.Duration `env:"JWT_EXPIRATION" env-default:"24h"`
+		SecretKey  string
+		Expiration time.Duration
 	}
-
 	Log struct {
-		Level    string `env:"LOG_LEVEL" env-default:"info"`
-		FilePath string `env:"LOG_PATH" env-default:"./logs/app.log"`
+		Level    string
+		FilePath string
 	}
 }
 
 func Load() *Config {
-	var cfg Config
-	if err := env.Parse(&cfg); err != nil {
-		panic("配置加载失败: " + err.Error())
+	// 加载.env文件（如果存在）
+	_ = godotenv.Load()
+
+	cfg := &Config{
+		Server: struct{ Port string }{
+			Port: getEnv("PORT", "8080"),
+		},
+		DB: struct{ DSN string }{
+			DSN: getEnv("DB_DSN", "root:password@tcp(localhost:3306)/gardenguide?charset=utf8mb4&parseTime=True"),
+		},
+		JWT: struct {
+			SecretKey  string
+			Expiration time.Duration
+		}{
+			SecretKey:  getEnv("JWT_SECRET", "my_secret_key_for_jwt"),
+			Expiration: parseDuration(getEnv("JWT_EXPIRATION", "24h")),
+		},
+		Log: struct {
+			Level    string
+			FilePath string
+		}{
+			Level:    getEnv("LOG_LEVEL", "info"),
+			FilePath: getEnv("LOG_PATH", "./logs/app.log"),
+		},
 	}
-	return &cfg
+	return cfg
+}
+
+// 辅助函数：获取环境变量（带默认值）
+func getEnv(key, defaultValue string) string {
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
+	return defaultValue
+}
+
+// 辅助函数：解析时间间隔
+func parseDuration(durationStr string) time.Duration {
+	duration, err := time.ParseDuration(durationStr)
+	if err != nil {
+		panic("无效的时间间隔格式: " + durationStr)
+	}
+	return duration
 }

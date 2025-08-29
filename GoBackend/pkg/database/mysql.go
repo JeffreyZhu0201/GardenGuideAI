@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:39
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 03:59:15
+ * @LastEditTime: 2025-08-29 07:12:21
  * @FilePath: /GardenGuideAI/GoBackend/pkg/database/mysql.go
  * @Description:
  *
@@ -12,6 +12,9 @@
 package database
 
 import (
+	"log"
+
+	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/internal/domain"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -25,6 +28,13 @@ func NewMySQL(dsn string) *gorm.DB {
 	if err != nil {
 		panic("数据库连接失败: " + err.Error())
 	}
+	log.Println("数据库连接成功")
+
+	// 添加自动迁移
+	if err := autoMigrate(db); err != nil {
+		panic("数据库迁移失败: " + err.Error())
+	}
+	log.Println("数据库自动迁移成功")
 
 	// 配置连接池
 	sqlDB, _ := db.DB()
@@ -32,4 +42,11 @@ func NewMySQL(dsn string) *gorm.DB {
 	sqlDB.SetMaxOpenConns(100)
 
 	return db
+}
+
+func autoMigrate(db *gorm.DB) error {
+	return db.AutoMigrate(
+		&domain.User{}, // 自动创建用户表
+		// 添加其他模型...
+	)
 }

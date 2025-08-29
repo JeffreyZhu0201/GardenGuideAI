@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:40:45
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 03:59:30
+ * @LastEditTime: 2025-08-29 06:28:39
  * @FilePath: /GardenGuideAI/GoBackend/pkg/jwt/jwt_service.go
  * @Description:
  * 定义JWT服务
@@ -29,7 +29,7 @@ type AuthService struct {
 	expiration time.Duration
 }
 
-func NewAuthService(secretKey []byte, expiration time.Duration) *AuthService {
+func NewJWTService(secretKey []byte, expiration time.Duration) *AuthService {
 	return &AuthService{
 		secretKey:  secretKey,
 		expiration: expiration,

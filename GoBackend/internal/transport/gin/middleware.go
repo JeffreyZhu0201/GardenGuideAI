@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:38:18
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 03:58:43
+ * @LastEditTime: 2025-08-29 06:36:17
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/middleware.go
  * @Description:
  *
@@ -17,7 +17,7 @@ import (
 
 	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/pkg/jwt"
 	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
+	jwtv5 "github.com/golang-jwt/jwt/v5"
 )
 
 // AuthMiddleware 认证中间件
@@ -44,7 +44,7 @@ func AuthMiddleware(jwtService jwt.JWTService) gin.HandlerFunc {
 		}
 
 		// 提取声明信息
-		claims, ok := token.Claims.(jwt.MapClaims)
+		claims, ok := token.Claims.(jwtv5.MapClaims)
 		if !ok {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "无效的令牌声明"})
 			return

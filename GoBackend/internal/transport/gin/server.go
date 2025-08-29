@@ -2,11 +2,11 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:20
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 03:58:08
+ * @LastEditTime: 2025-08-29 07:07:30
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/server.go
  * @Description:
  *
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ * Copyright (c) 2025 by JeffreuZhu, All Rights Reserved.
  */
 
 package gin
@@ -34,6 +34,7 @@ func NewServer(opts ...Option) *Server {
 		router: gin.New(),
 	}
 
+	// opt 是一个接受Server指针的函数，接收前面的s，将里面的元素赋值
 	for _, opt := range opts {
 		opt(s)
 	}
@@ -56,7 +57,7 @@ func WithLogger(log logger.Logger) Option {
 	}
 }
 
-func WithJWTService(jwtService jwt.JWTService) Option {
+func WithJWTService(jwtService *jwt.AuthService) Option {
 	return func(s *Server) {
 		s.jwtService = jwtService
 	}
@@ -72,8 +73,12 @@ func (s *Server) setMiddlewares() {
 
 func (s *Server) registerRoutes() {
 	// 初始化认证服务和处理器
+
+	// 数据库
 	authRepo := repository.NewAuthRepository(s.db)
+	// 服务
 	authService := service.NewAuthService(authRepo, s.jwtService)
+	// 处理器
 	authHandler := NewAuthHandler(authService)
 
 	// 注册认证路由
@@ -95,6 +100,7 @@ func (s *Server) Run(addr string) error {
 	return s.router.Run(addr)
 }
 
+// 跨域中间件
 func corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")

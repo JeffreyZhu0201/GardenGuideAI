@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:39:45
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 03:57:01
+ * @LastEditTime: 2025-08-29 07:12:39
  * @FilePath: /GardenGuideAI/GoBackend/internal/domain/user.go
  * @Description:
  * 定义用户领域模型
@@ -15,15 +15,16 @@
 package domain
 
 import (
-	"time"
+	"gorm.io/gorm"
 )
 
 type User struct {
-	ID        uint      `gorm:"primaryKey" json:"id"`
-	Email     string    `gorm:"uniqueIndex;size:255" json:"email"`
-	Password  string    `gorm:"size:255" json:"-"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	gorm.Model
+	// ID    uint   `gorm:"primaryKey" json:"id"`
+	Email    string `gorm:"uniqueIndex;size:255" json:"email"`
+	Password string `gorm:"size:255" json:"-"`
+	// CreatedAt time.Time `json:"created_at"`
+	// UpdatedAt time.Time `json:"updated_at"`
 }
 
 type RegisterRequest struct {
