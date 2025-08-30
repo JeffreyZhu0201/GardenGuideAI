@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-30 02:07:30
+ * @LastEditTime: 2025-08-30 09:25:51
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/_layout.tsx
  * @Description: 
  * 
@@ -15,7 +15,6 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import React from 'react';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();

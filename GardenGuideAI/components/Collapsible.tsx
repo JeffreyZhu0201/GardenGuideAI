@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-30 02:08:57
+ * @LastEditTime: 2025-08-30 09:25:23
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/Collapsible.tsx
  * @Description: 
  * 
@@ -16,7 +16,6 @@ import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import React from 'react';
 
 export function Collapsible({ children, title }: PropsWithChildren & { title: string }) {
   const [isOpen, setIsOpen] = useState(false);

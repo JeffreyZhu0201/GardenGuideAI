@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-30 02:08:40
+ * @LastEditTime: 2025-08-30 09:25:55
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/+not-found.tsx
  * @Description: 
  * 
@@ -13,7 +13,6 @@ import { StyleSheet } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import React from 'react';
 
 export default function NotFoundScreen() {
   return (
