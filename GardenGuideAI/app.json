@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "GardenGuideAI",
-    "slug": "gardenguideai",
+    "slug": "GardenGuideAI",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -16,8 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true,
-      "package": "com.jeffreyzhu.gardenguideai"
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "bundler": "metro",
@@ -38,13 +37,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "cad8d6bd-dc8d-44fd-bca0-326a788772d4"
-      }
-    },
-    "owner": "jeffreyzhu"
+    }
   }
 }

@@ -2,11 +2,11 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:20
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 07:07:30
+ * @LastEditTime: 2025-08-30 00:54:03
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/server.go
  * @Description:
  *
- * Copyright (c) 2025 by JeffreuZhu, All Rights Reserved.
+ * Copyright (c) 2025 by Jeffreu Zhu, All Rights Reserved.
  */
 
 package gin
@@ -20,6 +20,10 @@ import (
 	"gorm.io/gorm"
 )
 
+/**
+ * @description: 服务端 模型
+ * @return {*}
+ */
 type Server struct {
 	router     *gin.Engine
 	db         *gorm.DB
@@ -29,6 +33,10 @@ type Server struct {
 
 type Option func(*Server)
 
+/**
+ * @description: 新建服务端
+ * @return {*}
+ */
 func NewServer(opts ...Option) *Server {
 	s := &Server{
 		router: gin.New(),
@@ -40,29 +48,47 @@ func NewServer(opts ...Option) *Server {
 	}
 
 	s.setMiddlewares()
-	s.registerRoutes()
 
+	s.registerRoutes()
 	return s
 }
 
+/**
+ * @description: 数据库
+ * @return {*}
+ */
 func WithDatabase(db *gorm.DB) Option {
 	return func(s *Server) {
 		s.db = db
 	}
 }
 
+/**
+ * @description: 日志
+ * @param {logger.Logger} log
+ * @return {*}
+ */
 func WithLogger(log logger.Logger) Option {
 	return func(s *Server) {
 		s.log = log
 	}
 }
 
+/**
+ * @description: JWT 服务
+ * @param {*jwt.AuthService} jwtService
+ * @return {*}
+ */
 func WithJWTService(jwtService *jwt.AuthService) Option {
 	return func(s *Server) {
 		s.jwtService = jwtService
 	}
 }
 
+/**
+ * @description: 设置中间件
+ * @return {*}
+ */
 func (s *Server) setMiddlewares() {
 	s.router.Use(
 		gin.Recovery(),
@@ -71,6 +97,10 @@ func (s *Server) setMiddlewares() {
 	)
 }
 
+/**
+ * @description: 注册路由
+ * @return {*}
+ */
 func (s *Server) registerRoutes() {
 	// 初始化认证服务和处理器
 
@@ -96,11 +126,19 @@ func (s *Server) registerRoutes() {
 	}
 }
 
+/**
+ * @description: 启动服务
+ * @param {string} addr
+ * @return {*}
+ */
 func (s *Server) Run(addr string) error {
 	return s.router.Run(addr)
 }
 
-// 跨域中间件
+/**
+ * @description: 跨域中间件
+ * @return {*}
+ */
 func corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")
@@ -111,7 +149,6 @@ func corsMiddleware() gin.HandlerFunc {
 			c.AbortWithStatus(204)
 			return
 		}
-
 		c.Next()
 	}
 }
