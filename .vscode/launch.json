@@ -5,6 +5,31 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run Website",
+            "command": "npm run start",
+            "request": "launch",
+            "type": "node-terminal",
+            "cwd": "${workspaceFolder}/Website",
+        },
+        {
+            "name": "Go: Launch Server",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/GoBackend/cmd/main.go",
+            "cwd": "${workspaceFolder}/GoBackend",
+            "env": {
+                "DB_DSN": "GardenGuideAI:7fTbnDFPnmZdTmEN@tcp(47.108.248.188:3307)/gardenguideai?charset=utf8mb4&parseTime=True",
+                "JWT_SECRET": "yawdawdawfrgtdhdtdwrdf",
+                "JWT_EXPIRATION": "24h",
+                "PORT": "8080",
+                "LOG_LEVEL": "info",
+                "LOG_PATH": "./logs/app.log"
+            },
+            "envFile": "${workspaceFolder}/GoBackend/.env",
+            "console": "integratedTerminal" // 输出显示在集成终端中，方便查看日志
+        },
+        {
             "name": "FastAPI: Uvicorn", // 调试配置的名称
             "type": "debugpy", // 调试器类型
             "request": "launch", // 启动模式
@@ -22,8 +47,6 @@
             "console": "integratedTerminal", // 使用集成终端输出日志
             "cwd": "${workspaceFolder}/FloraAPI" // 工作目录（通常为项目根目录）
         },
-
-
         {
         "name": "RUN GardenGuideAI Expo",
         "request": "launch",
@@ -38,6 +61,6 @@
         "skipFiles": [
             "<node_internals>/**"
         ]
-        }
+        },
     ]
 }
