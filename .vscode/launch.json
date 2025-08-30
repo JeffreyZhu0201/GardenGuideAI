@@ -1,3 +1,15 @@
+/*
+ * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @Date: 2025-08-29 02:12:37
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-08-30 14:06:22
+ * @FilePath: /GardenGuideAI/.vscode/launch.json
+ * @Description: 调试配置
+ * 
+ * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ */
+
+
 {
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
@@ -31,7 +43,7 @@
         },
         {
             "name": "FastAPI: Uvicorn", // 调试配置的名称
-            "type": "debugpy", // 调试器类型
+            "type": "python", // 调试器类型
             "request": "launch", // 启动模式
             "module": "uvicorn", // 要运行的模块
             "args": [
