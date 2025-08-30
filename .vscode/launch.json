@@ -5,17 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debug FloraAPI",
-            "type": "debugpy",
-            "cwd": "${workspaceFolder}/FloraAPI",
-            "request": "launch",
-            "module": "uvicorn",
+            "name": "FastAPI: Uvicorn", // 调试配置的名称
+            "type": "debugpy", // 调试器类型
+            "request": "launch", // 启动模式
+            "module": "uvicorn", // 要运行的模块
             "args": [
-                "main:app",
-                "--reload"
+                "main:app", // 应用入口点（格式：文件名:FastAPI实例名）
+                "--host", "0.0.0.0", // 监听主机地址（0.0.0.0表示所有网络接口）
+                "--port", "8000", // 监听端口
+                "--reload" // 启用热重载（开发环境推荐）
             ],
-            "jinja": true
+            "justMyCode": false, // 允许调试第三方库代码
+            "env": {
+                "PYDEVD_DISABLE_FILE_VALIDATION": "1" // 禁用文件验证（解决某些环境报错）
+            },
+            "console": "integratedTerminal", // 使用集成终端输出日志
+            "cwd": "${workspaceFolder}/FloraAPI" // 工作目录（通常为项目根目录）
         },
+
+
         {
         "name": "RUN GardenGuideAI Expo",
         "request": "launch",

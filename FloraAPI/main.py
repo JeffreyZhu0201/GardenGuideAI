@@ -1,9 +1,9 @@
 '''
 Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
 Date: 2025-08-29 13:47:13
-LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2025-08-30 16:35:26
-FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/main.py
+LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+LastEditTime: 2025-08-30 13:25:32
+FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
 Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
@@ -30,7 +30,7 @@ app = FastAPI(title="FloraAPI", description="植物识别API")
 
 identifyModel = IdentifyFlora(Config=Config)
 
-id_to_cat = read_json_file("app/dataset/1/category_mapping.json")
+id_to_cat = read_json_file("app/checkpoints/category_mapping.json")
 
 if id_to_cat == None:
     print("id_to_cat is None")

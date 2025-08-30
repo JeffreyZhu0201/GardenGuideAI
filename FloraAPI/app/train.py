@@ -1,9 +1,9 @@
 '''
 Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
 Date: 2025-08-29 19:07:51
-LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2025-08-30 16:38:26
-FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/app/train.py
+LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+LastEditTime: 2025-08-30 13:25:13
+FilePath: /GardenGuideAI/FloraAPI/app/train.py
 Description: 
 
 Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
@@ -46,10 +46,10 @@ class Config:
     mlp_ratio = 4.0    # MLP扩展比例
     
     # 设备配置
-    device = torch.device("cuda:7" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
     
     # 保存路径
-    save_dir = "./app/dataset/checkpoints"
+    save_dir = "./app/checkpoints"
     os.makedirs(save_dir, exist_ok=True)
     
     # 训练记录保存路径

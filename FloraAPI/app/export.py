@@ -1,9 +1,9 @@
 '''
 Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
 Date: 2025-08-28 21:51:35
-LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2025-08-30 14:22:45
-FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/app/export.py
+LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+LastEditTime: 2025-08-30 13:24:12
+FilePath: /GardenGuideAI/FloraAPI/app/export.py
 Description: 
 
 Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
@@ -32,7 +32,7 @@ class IdentifyFlora:
             mlp_ratio=Config.mlp_ratio
         ).to(Config.device)
 
-        self.model.load_state_dict(torch.load("./app/checkpoints/best_model.pth"))
+        self.model.load_state_dict(torch.load("./app/checkpoints/best_model.pth", map_location=Config.device))
         print("数据加载成功")
         self.model.to(device=self.Config.device)
         _,_,self.transform = get_transforms(Config=Config)
