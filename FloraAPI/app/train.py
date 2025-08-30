@@ -2,7 +2,7 @@
 Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
 Date: 2025-08-29 19:07:51
 LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2025-08-30 14:21:24
+LastEditTime: 2025-08-30 16:38:26
 FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/app/train.py
 Description: 
 
@@ -49,7 +49,7 @@ class Config:
     device = torch.device("cuda:7" if torch.cuda.is_available() else "cpu")
     
     # 保存路径
-    save_dir = "./checkpoints"
+    save_dir = "./app/dataset/checkpoints"
     os.makedirs(save_dir, exist_ok=True)
     
     # 训练记录保存路径

@@ -1,13 +1,14 @@
-"""
-Author: JeffreyZhu 1624410543@qq.com
-Date: 2025-08-28 13:09:27
+'''
+Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+Date: 2025-08-29 13:47:13
 LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2025-08-30 15:15:23
+LastEditTime: 2025-08-30 16:35:26
 FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/main.py
-Description: 植物识别API
+Description: 
 
-Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
-"""
+Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
+'''
+
 
 from PIL import Image
 from fastapi import FastAPI, File, UploadFile, HTTPException, Header, Request, Depends
@@ -22,13 +23,10 @@ from deepseek_api.ds_service import get_deepseek_answer
 from app.predict import predict
 from app.export import IdentifyFlora
 from app.train import Config
-from utils import read_json_file
+from utils import read_json_file,verify_token
+
 
 app = FastAPI(title="FloraAPI", description="植物识别API")
-
-# JWT配置（请根据您的实际配置修改）
-JWT_SECRET_KEY = "yawdawdawfrgtdhdtdwrdf"  # 与其他应用相同的密钥
-JWT_ALGORITHM = "HS256"
 
 identifyModel = IdentifyFlora(Config=Config)
 
@@ -37,36 +35,6 @@ id_to_cat = read_json_file("app/dataset/1/category_mapping.json")
 if id_to_cat == None:
     print("id_to_cat is None")
     exit(1)
-
-# JWT认证依赖函数
-async def verify_token(authorization: Optional[str] = Header(None)):
-    if not authorization:
-        raise HTTPException(
-            status_code=401,
-            detail="Authorization header is missing",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
-    try:
-        # 提取Bearer token
-        scheme, token = authorization.split()
-        if scheme.lower() != "bearer":
-            raise HTTPException(
-                status_code=401,
-                detail="Invalid authentication scheme",
-                headers={"WWW-Authenticate": "Bearer"},
-            )
-        
-        # 验证JWT token
-        payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
-        return payload
-        
-    except (ValueError, PyJWTError):
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid or expired token",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
 
 @app.post("/identify")
 async def identify_flora(
