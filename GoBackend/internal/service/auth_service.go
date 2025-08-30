@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:38:39
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 03:57:38
+ * @LastEditTime: 2025-08-30 07:46:30
  * @FilePath: /GardenGuideAI/GoBackend/internal/service/auth_service.go
  * @Description:
  *

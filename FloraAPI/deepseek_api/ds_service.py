@@ -1,34 +1,33 @@
 '''
 Author: JeffreyZhu 1624410543@qq.com
 Date: 2025-08-28 13:14:13
-LastEditors: JeffreyZhu 1624410543@qq.com
-LastEditTime: 2025-08-28 15:25:08
-FilePath: /GardenGuideAI/FloraAPI/deepseek_api/ds_service.py
+LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+LastEditTime: 2025-08-30 15:11:51
+FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/deepseek_api/ds_service.py
 Description: deepseek api service
 
 Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
 '''
 
-def get_deepseek_answer(identify_flora_result: str):
+from openai import OpenAI
 
-    """
-    调用deepseek api获取答案
-    """
-    import requests
-    url = "https://api.deepseek.cn/v1/chat/completions"
-    payload = {
-        "model": "deepseek-3.5",
-        "messages": [
-            {
-                "role": "user",
-                "content": f"你是一个植物专家，玫瑰花是什么植物 告诉我他的习性 从而对我种植有帮助 并且告诉我一些关于这个花的人文上的知识 请用中文回答，只要核心信息，小红书网红爆款风格，不要回答问候词"
-            }
-        ]
-    }
-    headers = {
-        "Authorization": "Bearer 123456",
-        "Content-Type": "application/json"
-    }
-    response = requests.post(url, json=payload, headers=headers)
-    return response.json()
+client = OpenAI(api_key="sk-b906da3faf9f4a9bb7f36755cb599e38", base_url="https://api.deepseek.com")
+'''
+description: 获取deepseek的回答
+param {*} question
+return {*}
+'''
+def get_deepseek_answer(question: str) -> str:
+    response = client.chat.completions.create(
+        model="deepseek-chat",
+        messages=[
+            {"role": "system", "content": "你是一个专业的植物专家和种植爱好者,你需要根据用户上传的植物名称,回答植物的基本信息,生长属性,养护指南,以及意义或花语。只返回html格式回答,不要返回markdown格式,只要body部分,适当添加表情"},
+            {"role": "user", "content": question},
+        ],
+        stream=False
+    )
 
+    return response.choices[0].message.content if response.choices[0].message.content else "没有回答"
+
+if __name__ == "__main__":
+    print(get_deepseek_answer("大豆"))

@@ -1,6 +1,17 @@
+/*
+ * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @Date: 2025-08-30 00:43:57
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-08-30 03:37:24
+ * @FilePath: /GardenGuideAI/GardenGuideAI/components/ThemedView.tsx
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ */
 import { View, type ViewProps } from 'react-native';
 
 import { useThemeColor } from '@/hooks/useThemeColor';
+import React from 'react';
 
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;
