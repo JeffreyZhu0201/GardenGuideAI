@@ -1,3 +1,13 @@
+/*
+ * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @Date: 2025-08-30 00:43:57
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-08-30 02:07:07
+ * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/index.tsx
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ */
 import { Image } from 'expo-image';
 import { Platform, StyleSheet } from 'react-native';
 
@@ -5,6 +15,7 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import React from 'react';
 
 export default function HomeScreen() {
   return (
