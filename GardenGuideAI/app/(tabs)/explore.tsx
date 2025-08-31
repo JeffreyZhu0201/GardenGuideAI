@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 06:27:00
+ * @LastEditTime: 2025-08-31 06:34:54
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/explore.tsx
  * @Description: 
  * 
@@ -48,7 +48,7 @@ function ExploreScreen() {
 
   const takePicture = async () => {
     const photo = await ref.current?.takePictureAsync();
-    setUri(photo?.uri);
+    setUri(photo?.uri || null);
   };
 
   const recordVideo = async () => {
@@ -74,7 +74,7 @@ function ExploreScreen() {
     return (
       <View>
         <Image
-          source={{ uri }}
+          source={uri ? { uri } : undefined}
           contentFit="contain"
           style={{ width: 300, aspectRatio: 1 }}
         />
