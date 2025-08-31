@@ -12,7 +12,7 @@
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true // eas build --platform android --profile development
     }
   },
   "submit": {

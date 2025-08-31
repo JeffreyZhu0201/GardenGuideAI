@@ -1,20 +1,19 @@
 
-import React from "react";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import Analytics from "./components/Analytics";
-import Newsletter from "./components/Newsletter";
-import Cards from "./components/Cards";
 import Footer from "./components/Footer";
+import { Routes, Route,Navigate } from 'react-router-dom'
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <Analytics />
-      <Newsletter />
-      <Cards />
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/home" element={<Home />} />
+          {/* <Route path="/analytics" element={<Analytics />} />
+          <Route path="/newsletter" element={<Newsletter />} /> */}
+        </Routes>
       <Footer />
     </>
   );

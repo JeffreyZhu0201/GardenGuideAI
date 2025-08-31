@@ -1,12 +1,25 @@
+/*
+ * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @Date: 2025-08-29 08:03:32
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-08-31 07:42:06
+ * @FilePath: /GardenGuideAI/Website/src/index.js
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
+ */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
+import { BrowserRouter } from 'react-router-dom'
+import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 
