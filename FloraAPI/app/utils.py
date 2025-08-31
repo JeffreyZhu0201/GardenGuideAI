@@ -6,7 +6,7 @@ LastEditTime: 2025-08-30 13:59:40
 FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/app/utils.py
 Description: 
 
-Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
+Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 '''
 
 from torchvision import transforms

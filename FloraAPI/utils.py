@@ -2,11 +2,11 @@
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-30 14:50:55
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-08-30 16:33:08
-FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/utils.py
+LastEditTime: 2025-08-31 08:53:53
+FilePath: /GardenGuideAI/FloraAPI/utils.py
 Description: 工具函数
 
-Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
+Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 '''
 
 import json

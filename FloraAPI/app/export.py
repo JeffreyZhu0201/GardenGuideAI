@@ -6,7 +6,7 @@ LastEditTime: 2025-08-30 13:24:12
 FilePath: /GardenGuideAI/FloraAPI/app/export.py
 Description: 
 
-Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
+Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 '''
 
 

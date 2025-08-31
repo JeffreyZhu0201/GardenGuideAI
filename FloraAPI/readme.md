@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/FloraAPI/readme.md
  * @Description: 植物识别API
  * 
- * Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 -->
 
 # 🌿 FloraAPI - 智能植物识别API

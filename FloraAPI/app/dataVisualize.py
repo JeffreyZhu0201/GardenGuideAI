@@ -6,7 +6,7 @@ LastEditTime: 2025-08-29 19:10:38
 FilePath: /app copy/dataVisualize.py
 Description: 
 
-Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 
+Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 '''
 import json
 import matplotlib.pyplot as plt
