@@ -2,7 +2,7 @@
  * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
  * @Date: 2025-08-30 16:00:05
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 08:25:13
+ * @LastEditTime: 2025-08-31 08:27:40
  * @FilePath: /GardenGuideAI/FloraAPI/readme.md
  * @Description: 植物识别API
  * 
@@ -56,30 +56,6 @@ GardenGuideAI/
 │   ├── utils.py                # 工具函数
 │   ├── requirements.txt        # Python依赖
 │   └── environment.yml        # Conda环境配置
-│
-├── GardenGuideAI/              # 移动应用(Expo)
-│   ├── app/
-│   │   ├── (tabs)/            # 底部导航页
-│   │   │   ├── index.tsx      # 首页
-│   │   │   ├── explore.tsx    # 拍照识别页
-│   │   │   └── mine.tsx       # 个人中心  
-│   │   ├── store/             # Zustand状态管理
-│   │   └── _layout.tsx        # 根布局
-│   ├── components/             # 通用组件
-│   ├── network/               # API请求
-│   ├── constants/             # 常量配置
-│   └── utils/                 # 工具函数
-│
-├── Website/                   # 官网(React)
-│   ├── src/
-│   │   ├── components/       # 页面组件
-│   │   ├── App.jsx           # 路由配置
-│   │   └── main.jsx          # 入口文件
-│
-└── GoBackend/                 # Go语言后端服务
-    ├── pkg/
-    │   ├── jwt/              # 认证模块
-    │   └── logger/           # 日志模块
 ```
 
 ## 功能特性
