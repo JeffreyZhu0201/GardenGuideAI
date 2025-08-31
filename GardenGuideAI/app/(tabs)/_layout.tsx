@@ -1,3 +1,13 @@
+/*
+ * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @Date: 2025-08-30 00:43:57
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-08-31 01:17:36
+ * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/_layout.tsx
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ */
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
@@ -27,7 +37,7 @@ export default function TabLayout() {
         }),
       }}>
       <Tabs.Screen
-        name="index"
+        name="index"  // 加载的tsx文件名
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
@@ -39,6 +49,13 @@ export default function TabLayout() {
           title: 'Explore',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
         }}
+      />
+      <Tabs.Screen
+      name="mine"
+      options={{
+        title: 'Mine',
+        tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+      }}
       />
     </Tabs>
   );

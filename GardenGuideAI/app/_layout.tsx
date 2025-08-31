@@ -2,9 +2,9 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-30 09:25:51
+ * @LastEditTime: 2025-08-31 01:37:12
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/_layout.tsx
- * @Description: 
+ * @Description: 应用根布局
  * 
  * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
  */
@@ -15,12 +15,15 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useStore } from '@/app/store/store';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
+
+  const { headerTitle } = useStore();
 
   if (!loaded) {
     // Async font loading only occurs in development.
@@ -30,7 +33,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: true, headerTitle: headerTitle || "GardenGuideAI"}} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
