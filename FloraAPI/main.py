@@ -2,7 +2,7 @@
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-29 13:47:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-08-31 09:08:37
+LastEditTime: 2025-08-31 09:15:58
 FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
