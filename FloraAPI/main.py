@@ -2,7 +2,7 @@
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-29 13:47:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-08-31 09:15:58
+LastEditTime: 2025-08-31 14:13:05
 FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
@@ -31,11 +31,14 @@ v1 = APIRouter(prefix="/api/v1")  # 新增版本路由
 
 identifyModel = IdentifyFlora(Config=Config)
 
+
+
 id_to_cat = read_json_file("app/checkpoints/category_mapping.json")
 np.random.seed(42)
 if id_to_cat == None:
     print("id_to_cat is None")
     exit(1)
+
 
 @v1.post("/identify")
 async def identify_flora(

@@ -2,9 +2,9 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:22:48
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 07:02:42
+ * @LastEditTime: 2025-08-31 15:22:22
  * @FilePath: /GardenGuideAI/GoBackend/cmd/main.go
- * @Description:
+ * @Description: 主程序入口文件
  *
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */

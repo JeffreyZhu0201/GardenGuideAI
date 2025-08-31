@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:26:33
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-30 13:37:27
+ * @LastEditTime: 2025-08-31 15:19:42
  * @FilePath: /GardenGuideAI/GoBackend/config/config.go
  * @Description:
  * 定义配置结构体
@@ -48,7 +48,7 @@ func Load() *Config {
 			Port: getEnv("PORT", "8080"),
 		},
 		DB: struct{ DSN string }{
-			DSN: getEnv("DB_DSN", "root:21fac6517e772a4b@tcp(47.108.248.188:3307)/gardenguide?charset=utf8mb4&parseTime=True"),
+			DSN: getEnv("DB_DSN", "root:123123@tcp(127.0.0.1:3307)/gardenguide?charset=utf8mb4&parseTime=True"),
 		},
 		JWT: struct {
 			SecretKey  string
