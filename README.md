@@ -2,9 +2,9 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 02:12:37
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 08:34:31
+ * @LastEditTime: 2025-08-31 08:39:55
  * @FilePath: /GardenGuideAI/README.md
- * @Description: 
+ * @Description: 园艺助手综合项目
  * 
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 -->

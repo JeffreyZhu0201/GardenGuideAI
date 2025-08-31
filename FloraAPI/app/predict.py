@@ -1,12 +1,12 @@
 '''
-Author: JeffreyZhu 1624410543@qq.com
+Author: JeffreyZhu JeffreyZhu0201@gmail.com
 Date: 2025-08-28 15:14:26
-LastEditors: JeffreyZhu 1624410543@qq.com
+LastEditors: JeffreyZhu JeffreyZhu0201@gmail.com
 LastEditTime: 2025-08-28 15:14:28
 FilePath: /GardenGuideAI/FloraAPI/app/predict.py
 Description: 识别接口api
 
-Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
+Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 '''
 
 import torch

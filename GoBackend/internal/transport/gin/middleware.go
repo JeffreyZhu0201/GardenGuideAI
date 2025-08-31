@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/middleware.go
  * @Description:
  *
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
 package gin

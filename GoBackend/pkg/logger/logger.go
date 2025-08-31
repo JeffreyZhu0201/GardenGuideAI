@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GoBackend/pkg/logger/logger.go
  * @Description: 日志模块
  *
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
 package logger

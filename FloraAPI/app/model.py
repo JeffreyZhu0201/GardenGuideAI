@@ -1,12 +1,12 @@
 '''
-Author: JeffreyZhu 1624410543@qq.com
+Author: JeffreyZhu JeffreyZhu0201@gmail.com
 Date: 2025-08-28 09:34:13
-LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
 LastEditTime: 2025-08-30 08:46:03
 FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/经典模型复现/UNET/app copy/model.py
 Description: 
 
-Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
+Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 '''
 
 

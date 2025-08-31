@@ -8,7 +8,7 @@
  * 定义配置结构体
  * 包含服务器端口、数据库DSN、JWT密钥和过期时间等配置
  *
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
 // ... 保留文件头注释 ...

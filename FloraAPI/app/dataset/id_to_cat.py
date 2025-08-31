@@ -1,9 +1,9 @@
 '''
-Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-30 14:37:41
-LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2025-08-30 14:46:53
-FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/app/dataset/id_to_cat.py
+LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+LastEditTime: 2025-08-31 08:52:25
+FilePath: /GardenGuideAI/FloraAPI/app/dataset/id_to_cat.py
 Description: 
 
 Copyright (c) 2025 by ${error: git config user.name & please set dead value or install git}, All Rights Reserved. 

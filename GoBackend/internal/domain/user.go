@@ -9,7 +9,7 @@
  * 包含用户的基本信息和行为
  * 例如：用户ID、用户名、密码、邮箱、手机号等
  *
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
 package domain

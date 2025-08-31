@@ -1,12 +1,12 @@
 '''
-Author: JeffreyZhu 1624410543@qq.com
+Author: JeffreyZhu JeffreyZhu0201@gmail.com
 Date: 2025-08-28 09:33:59
-LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2025-08-30 14:22:16
-FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/app/dataset.py
+LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+LastEditTime: 2025-08-31 08:52:52
+FilePath: /GardenGuideAI/FloraAPI/app/dataset.py
 Description: 植物数据集类
 
-Copyright (c) 2025 by ${git_name_email}, All Rights Reserved. 
+Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 '''
 
 

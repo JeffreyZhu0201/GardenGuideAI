@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 03:54:13
+ * @LastEditTime: 2025-08-31 08:51:01
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/_layout.tsx
  * @Description: 应用根布局
  * 

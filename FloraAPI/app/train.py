@@ -1,5 +1,5 @@
 '''
-Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-29 19:07:51
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
 LastEditTime: 2025-08-30 13:25:13

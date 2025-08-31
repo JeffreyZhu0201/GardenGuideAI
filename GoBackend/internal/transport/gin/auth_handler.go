@@ -8,7 +8,7 @@
  * 定义认证处理程序
  * 处理用户注册、登录、注销等认证相关的请求
  *
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
 package gin

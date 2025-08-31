@@ -1,7 +1,7 @@
 '''
-Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-30 14:50:55
-LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
 LastEditTime: 2025-08-30 16:33:08
 FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/FloraAPI/utils.py
 Description: 工具函数

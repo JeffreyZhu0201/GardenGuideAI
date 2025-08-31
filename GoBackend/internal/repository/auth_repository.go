@@ -8,7 +8,7 @@
  * 定义认证仓库
  * 包含用户认证、注册、密码重置等功能
  *
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
 package repository

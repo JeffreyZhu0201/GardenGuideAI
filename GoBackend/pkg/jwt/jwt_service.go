@@ -8,7 +8,7 @@
  * 定义JWT服务
  * 包含生成JWT、解析JWT、校验JWT等功能
  *
- * Copyright (c) 2025 by ${git_name_email}, All Rights Reserved.
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
 package jwt

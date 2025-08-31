@@ -2,13 +2,12 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 02:12:37
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 07:21:01
+ * @LastEditTime: 2025-08-31 08:40:03
  * @FilePath: /GardenGuideAI/.vscode/launch.json
  * @Description: 调试配置
  * 
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
-
 
 {
     // Use IntelliSense to learn about possible attributes.
