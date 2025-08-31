@@ -2,7 +2,7 @@
 Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
 Date: 2025-08-29 13:47:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-08-30 13:25:32
+LastEditTime: 2025-08-31 02:08:54
 FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
@@ -11,7 +11,7 @@ Copyright (c) 2025 by ${error: git config user.name & please set dead value or i
 
 
 from PIL import Image
-from fastapi import FastAPI, File, UploadFile, HTTPException, Header, Request, Depends
+from fastapi import APIRouter,FastAPI, File, UploadFile, HTTPException, Header, Request, Depends
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
@@ -25,8 +25,8 @@ from app.export import IdentifyFlora
 from app.train import Config
 from utils import read_json_file,verify_token
 
-
 app = FastAPI(title="FloraAPI", description="植物识别API")
+v1 = APIRouter(prefix="/api/v1")  # 新增版本路由
 
 identifyModel = IdentifyFlora(Config=Config)
 
@@ -36,7 +36,7 @@ if id_to_cat == None:
     print("id_to_cat is None")
     exit(1)
 
-@app.post("/identify")
+@v1.post("/identify")
 async def identify_flora(
     file: UploadFile = File(...),
     token_payload: dict = Depends(verify_token)
@@ -71,11 +71,16 @@ async def identify_flora(
     }
     return response
 
-@app.post("/deepseek")
+@v1.post("/deepseek")
 async def getDeepSeekAnswer(
     request: Request,
     token_payload: dict = Depends(verify_token)
 ):
+    """
+        DeepSeek问答接口
+        - question: 用户提问的问题
+        - Authorization: Bearer <token>
+    """
     question = request.query_params.get("question")
     if not question:
         raise HTTPException(status_code=400, detail="Question parameter is required")
@@ -86,6 +91,11 @@ async def getDeepSeekAnswer(
         "answer": answer
     }
 
+app.include_router(v1)  # 包含版本路由
+
 @app.get("/")
 def read_root():
+    """
+    根路由
+    """
     return {"Hello": "World"}
