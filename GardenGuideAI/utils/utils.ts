@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GardenGuideAI/utils/utils.ts
  * @Description:  工具类
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 
 type RouteParams = Record<string, string | number>;

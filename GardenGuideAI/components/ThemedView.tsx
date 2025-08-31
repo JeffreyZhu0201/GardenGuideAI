@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/ThemedView.tsx
  * @Description: 
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 import { View, type ViewProps } from 'react-native';
 

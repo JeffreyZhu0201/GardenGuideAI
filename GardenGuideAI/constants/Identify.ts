@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GardenGuideAI/constants/Identify.ts
  * @Description: 
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 
 

@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/ExternalLink.tsx
  * @Description: 
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 import { Href, Link } from 'expo-router';
 import { openBrowserAsync } from 'expo-web-browser';

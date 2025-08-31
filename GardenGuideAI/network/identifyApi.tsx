@@ -2,11 +2,11 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-31 01:19:14
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 02:22:21
+ * @LastEditTime: 2025-08-31 02:25:37
  * @FilePath: /GardenGuideAI/GardenGuideAI/network/identifyApi.tsx
  * @Description:    识别相关接口
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 
 import { IdentifyConfig } from "@/constants/Identify";
@@ -77,4 +77,3 @@ export const deepseekPlant = async (
 
     return response.json();
 };
-

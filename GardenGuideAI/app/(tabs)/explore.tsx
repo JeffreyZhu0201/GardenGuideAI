@@ -1,120 +1,179 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+/*
+ * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @Date: 2025-08-30 00:43:57
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-08-31 06:27:00
+ * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/explore.tsx
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
+ */
 
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import React, { useCallback } from 'react';
-import { useFocusEffect } from 'expo-router';
-import { useStore } from '@/app/store/store';
+import {
+  CameraMode,
+  CameraType,
+  CameraView,
+  useCameraPermissions,
+} from "expo-camera";
 
-export default function TabTwoScreen() {
-  const {setHeaderTitle} = useStore();
-  useFocusEffect(
-      useCallback(() => {
-          setHeaderTitle("社区");
-      }, [setHeaderTitle]) // 添加依赖项
-  );
+import { useRef, useState } from "react";
+import { Button, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image } from "expo-image";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Feather from "@expo/vector-icons/Feather";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+
+function ExploreScreen() {
+  const [permission, requestPermission] = useCameraPermissions();
+  const ref = useRef<CameraView>(null);
+  const [uri, setUri] = useState<string | null>(null);
+  const [mode, setMode] = useState<CameraMode>("picture");
+  const [facing, setFacing] = useState<CameraType>("back");
+  const [recording, setRecording] = useState(false);
+
+  if (!permission) {
+    return null;
+  }
+
+  if (!permission.granted) {
+    return (
+      <View style={styles.container}>
+        <Text style={{ textAlign: "center" }}>
+          We need your permission to use the camera
+        </Text>
+        <Button onPress={requestPermission} title="Grant permission" />
+      </View>
+    );
+  }
+
+  const takePicture = async () => {
+    const photo = await ref.current?.takePictureAsync();
+    setUri(photo?.uri);
+  };
+
+  const recordVideo = async () => {
+    if (recording) {
+      setRecording(false);
+      ref.current?.stopRecording();
+      return;
+    }
+    setRecording(true);
+    const video = await ref.current?.recordAsync();
+    console.log({ video });
+  };
+
+  const toggleMode = () => {
+    setMode((prev) => (prev === "picture" ? "video" : "picture"));
+  };
+
+  const toggleFacing = () => {
+    setFacing((prev) => (prev === "back" ? "front" : "back"));
+  };
+
+  const renderPicture = () => {
+    return (
+      <View>
+        <Image
+          source={{ uri }}
+          contentFit="contain"
+          style={{ width: 300, aspectRatio: 1 }}
+        />
+        <Button onPress={() => setUri(null)} title="Take another picture" />
+      </View>
+    );
+  };
+
+  const renderCamera = () => {
+    return (
+      <CameraView
+        style={styles.camera}
+        ref={ref}
+        mode={mode}
+        facing={facing}
+        mute={false}
+        responsiveOrientationWhenOrientationLocked
+      >
+        <View style={styles.shutterContainer}>
+          <Pressable onPress={toggleMode}>
+            {mode === "picture" ? (
+              <AntDesign name="picture" size={32} color="white" />
+            ) : (
+              <Feather name="video" size={32} color="white" />
+            )}
+          </Pressable>
+          <Pressable onPress={mode === "picture" ? takePicture : recordVideo}>
+            {({ pressed }) => (
+              <View
+                style={[
+                  styles.shutterBtn,
+                  {
+                    opacity: pressed ? 0.5 : 1,
+                  },
+                ]}
+              >
+                <View
+                  style={[
+                    styles.shutterBtnInner,
+                    {
+                      backgroundColor: mode === "picture" ? "white" : "red",
+                    },
+                  ]}
+                />
+              </View>
+            )}
+          </Pressable>
+          <Pressable onPress={toggleFacing}>
+            <FontAwesome6 name="rotate-left" size={32} color="white" />
+          </Pressable>
+        </View>
+      </CameraView>
+    );
+  };
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      {uri ? renderPicture() : renderCamera()}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+  camera: {
+    flex: 1,
+    width: "100%",
+  },
+  shutterContainer: {
+    position: "absolute",
+    bottom: 44,
+    left: 0,
+    width: "100%",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 30,
+  },
+  shutterBtn: {
+    backgroundColor: "transparent",
+    borderWidth: 5,
+    borderColor: "white",
+    width: 85,
+    height: 85,
+    borderRadius: 45,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  shutterBtnInner: {
+    width: 70,
+    height: 70,
+    borderRadius: 50,
   },
 });
+
+
+export default ExploreScreen;

@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/ParallaxScrollView.tsx
  * @Description: 
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 import type { PropsWithChildren, ReactElement } from 'react';
 

@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/HapticTab.tsx
  * @Description: 
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 import { BottomTabBarButtonProps } from '@react-navigation/bottom-tabs';
 import { PlatformPressable } from '@react-navigation/elements';

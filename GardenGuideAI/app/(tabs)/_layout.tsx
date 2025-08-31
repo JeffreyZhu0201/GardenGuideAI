@@ -2,11 +2,11 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 01:17:36
+ * @LastEditTime: 2025-08-31 03:52:03
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/_layout.tsx
  * @Description: 
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 import { Tabs } from 'expo-router';
 import React from 'react';
@@ -51,11 +51,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-      name="mine"
-      options={{
-        title: 'Mine',
-        tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-      }}
+        name="mine"
+        options={{
+          title: 'Mine',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+        }}
       />
     </Tabs>
   );

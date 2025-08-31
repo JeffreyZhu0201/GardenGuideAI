@@ -6,7 +6,7 @@
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/+not-found.tsx
  * @Description: 
  * 
- * Copyright (c) 2025 by ${Jeffrey Zhu}, All Rights Reserved. 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 import { Link, Stack } from 'expo-router';
 import { StyleSheet } from 'react-native';
