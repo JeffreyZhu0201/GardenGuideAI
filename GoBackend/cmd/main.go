@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:22:48
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 16:43:47
+ * @LastEditTime: 2025-09-01 03:27:36
  * @FilePath: /GardenGuideAI/GoBackend/cmd/main.go
  * @Description: 主程序入口文件
  *
@@ -50,5 +50,5 @@ func main() {
 	)
 
 	// 启动服务
-	server.Run(":" + cfg.Server.Port)
+	server.Run("0.0.0.0:" + cfg.Server.Port)
 }

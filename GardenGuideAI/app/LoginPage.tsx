@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 01:27:08
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 01:57:21
+ * @LastEditTime: 2025-09-01 02:46:42
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/LoginPage.tsx
  * @Description: 登陆页面
  * 
@@ -18,7 +18,7 @@ import { User } from '@/constants/User';
 import { useCameraPermissions } from 'expo-camera';
 import {Login} from "../network/userApi"
 
-const LoginPage = () => {
+export default function LoginPage() {
   const {userInfo ,setUserInfo,token,setToken} = useStore()
 
   const [currentUserEmail,setCurrentUserEmail] = useState<string>("")
@@ -26,11 +26,12 @@ const LoginPage = () => {
 
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'LoginPage'>>();
-  const handleLogin = () => {
+  
+  const handleLogin = async (Email:string,Password:string) => {
     // Implement your login logic here
     console.log('Logging in with:', userInfo?.email, userInfo?.password);
-
-    const response = Login(currentUserEmail,currentUserPassword)
+    console.log(Email,Password)
+    const response = await Login(Email,Password)
 
     console.log(response)
     // setToken(response.token)
@@ -54,7 +55,7 @@ const LoginPage = () => {
         value={currentUserPassword}
         onChangeText={setCurrentUserPassword}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Login" onPress={() => handleLogin(currentUserEmail,currentUserPassword)} />
     </View>
   );
 };
@@ -79,5 +80,3 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
-
-export default LoginPage;

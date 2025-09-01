@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:20
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 15:27:18
+ * @LastEditTime: 2025-09-01 02:51:46
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/server.go
  * @Description:
  *
@@ -12,6 +12,8 @@
 package gin
 
 import (
+	"net/http"
+
 	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/internal/repository"
 	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/internal/service"
 	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/pkg/jwt"
@@ -97,6 +99,11 @@ func (s *Server) setMiddlewares() {
 	)
 }
 
+// Login 用户登录
+func hello(c *gin.Context) {
+	c.JSON(http.StatusOK, "123")
+}
+
 /**
  * @description: 注册路由
  * @return {*}
@@ -116,7 +123,7 @@ func (s *Server) registerRoutes() {
 	{
 		api.POST("/register", authHandler.Register)
 		api.POST("/login", authHandler.Login)
-
+		api.POST("/", hello)
 		// 需要认证的路由组
 		authGroup := api.Group("")
 		authGroup.Use(AuthMiddleware(s.jwtService))
