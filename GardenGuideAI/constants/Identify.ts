@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-31 01:55:53
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 02:12:40
+ * @LastEditTime: 2025-09-01 00:47:54
  * @FilePath: /GardenGuideAI/GardenGuideAI/constants/Identify.ts
  * @Description: 
  * 
@@ -13,15 +13,13 @@
 
 // ... existing comments ...
 
-interface Config {
-    BASEURL: string;
+interface IdentifyConfig {
     IDENTIFY_API: string;
     DEEPSEEK_API: string;
     AUTH_TOKEN: string;
 }
 
-export const IdentifyConfig: Config = {
-    BASEURL: 'http://192.168.215.2:8000/api/v1',
+export const IdentifyConfig: IdentifyConfig = {
     IDENTIFY_API: 'identify',
     DEEPSEEK_API: 'deepseek',   
     AUTH_TOKEN: 'Bearer 123456'

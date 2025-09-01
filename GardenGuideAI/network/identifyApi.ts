@@ -2,14 +2,15 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-31 01:19:14
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 02:25:37
- * @FilePath: /GardenGuideAI/GardenGuideAI/network/identifyApi.tsx
+ * @LastEditTime: 2025-09-01 01:07:40
+ * @FilePath: /GardenGuideAI/GardenGuideAI/network/identifyApi.ts
  * @Description:    识别相关接口
  * 
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 
 import { IdentifyConfig } from "@/constants/Identify";
+import { SystemConfig } from "@/constants/SystemConfig";
 import { joinRoutes, buildURL } from '@/utils/utils'
 
 interface IdentifyResponseData {
@@ -35,7 +36,7 @@ export const identifyPlant = async (
 ): Promise<IdentifyResponse> => {
     const formData = new FormData();
     formData.append('file', file);
-    const URL = joinRoutes(IdentifyConfig.BASEURL, IdentifyConfig.IDENTIFY_API);
+    const URL = joinRoutes(SystemConfig.BASEURL, IdentifyConfig.IDENTIFY_API);
     const response = await fetch(URL, {
         method: 'POST',
         headers: {
@@ -56,14 +57,13 @@ export const deepseekPlant = async (
     question: string,
     token: string
 ): Promise<IdentifyResponse> => {
-    const formData = new FormData();
 
     const query = {
         question : question
     }
 
     // const URL = joinRoutes(IdentifyConfig.BASEURL, IdentifyConfig.DEEPSEEK_API);
-    const URL = buildURL(IdentifyConfig.BASEURL, IdentifyConfig.DEEPSEEK_API, {}, query);
+    const URL = buildURL(SystemConfig.BASEURL, IdentifyConfig.DEEPSEEK_API, {}, query);
     const response = await fetch(URL, {
         method: 'POST',
         headers: {

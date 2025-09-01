@@ -2,9 +2,9 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-31 14:22:02
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 14:22:09
+ * @LastEditTime: 2025-09-01 00:35:28
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/Card.tsx
- * @Description:
+ * @Description: 
  *
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
