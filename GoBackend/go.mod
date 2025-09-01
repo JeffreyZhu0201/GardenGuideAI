@@ -5,6 +5,24 @@ go 1.24.6
 require gorm.io/driver/mysql v1.6.0
 
 require (
+	github.com/BurntSushi/toml v1.5.0 // indirect
+	github.com/fatih/camelcase v1.0.0 // indirect
+	github.com/fatih/gomodifytags v1.17.1-0.20250423142747-f3939df9aa3c // indirect
+	github.com/fatih/structtag v1.2.0 // indirect
+	github.com/fsnotify/fsnotify v1.9.0 // indirect
+	github.com/google/go-cmp v0.7.0 // indirect
+	golang.org/x/exp/typeparams v0.0.0-20250620022241-b7579e27df2b // indirect
+	golang.org/x/mod v0.26.0 // indirect
+	golang.org/x/telemetry v0.0.0-20250710130107-8d8967aff50b // indirect
+	golang.org/x/tools v0.35.1-0.20250728180453-01a3475a31bc // indirect
+	golang.org/x/tools/gopls v0.20.0 // indirect
+	golang.org/x/vuln v1.1.4 // indirect
+	honnef.co/go/tools v0.7.0-0.dev.0.20250523013057-bbc2f4dd71ea // indirect
+	mvdan.cc/gofumpt v0.8.0 // indirect
+	mvdan.cc/xurls/v2 v2.6.0 // indirect
+)
+
+require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/bytedance/sonic v1.14.0 // indirect
 	github.com/bytedance/sonic/loader v0.3.0 // indirect

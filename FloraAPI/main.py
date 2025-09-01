@@ -1,8 +1,8 @@
 '''
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-29 13:47:13
-LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-08-31 14:13:05
+LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+LastEditTime: 2025-09-01 19:26:36
 FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
@@ -19,7 +19,6 @@ import io
 import os
 import numpy as np
 import jwt
-from jwt import PyJWTError
 from deepseek_api.ds_service import get_deepseek_answer
 from app.predict import predict
 from app.export import IdentifyFlora

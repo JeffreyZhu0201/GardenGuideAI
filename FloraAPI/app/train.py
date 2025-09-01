@@ -22,7 +22,7 @@ from app.model import VisionTransformer
 from app.dataset import load_datasets,create_dataloaders
 
 '''
-description: 配置参数
+description: 配置文件
 return {*}
 '''
 class Config:

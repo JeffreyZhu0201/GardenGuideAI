@@ -1,8 +1,8 @@
 '''
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-30 14:50:55
-LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-08-31 08:53:53
+LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+LastEditTime: 2025-09-01 19:29:32
 FilePath: /GardenGuideAI/FloraAPI/utils.py
 Description: 工具函数
 
@@ -13,7 +13,7 @@ import json
 from typing import Optional
 
 from fastapi import HTTPException, Header
-from jwt import PyJWTError
+from jwt import InvalidTokenError
 import jwt
 
 # JWT配置（请根据您的实际配置修改）
@@ -56,7 +56,7 @@ async def verify_token(authorization: Optional[str] = Header(None)):
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
         return payload
         
-    except (ValueError, PyJWTError):
+    except (ValueError, InvalidTokenError):
         raise HTTPException(
             status_code=401,
             detail="Invalid or expired token",

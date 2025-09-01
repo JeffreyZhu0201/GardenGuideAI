@@ -53,7 +53,7 @@ class FloraDataset(Dataset):
             labels.append(row["category"])
 
         return data, labels
-
+    
     def __getitem__(self, idx):
         sample = self.dataPath[idx]
         label = self.labels[idx]

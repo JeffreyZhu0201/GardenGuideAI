@@ -1,8 +1,8 @@
 /*
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:22:48
- * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 03:27:36
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2025-09-01 20:22:21
  * @FilePath: /GardenGuideAI/GoBackend/cmd/main.go
  * @Description: 主程序入口文件
  *

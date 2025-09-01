@@ -1,8 +1,8 @@
 /*
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-31 14:22:02
- * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 00:35:28
+ * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @LastEditTime: 2025-09-01 21:50:13
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/Card.tsx
  * @Description: 
  *
@@ -31,7 +31,7 @@ const Card: React.FC<CardProps> = ({ title, image, content }) => {
     const lines = markdownContent.trim().split('\n').filter(line => line.trim() !== '');
     return lines.slice(0, 2).join('\n');
   };
-
+  
   const contentPreview = getMarkdownPreview(content);
 
   return (
