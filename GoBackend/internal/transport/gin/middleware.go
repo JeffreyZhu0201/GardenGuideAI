@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:38:18
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 06:36:17
+ * @LastEditTime: 2025-09-01 02:06:51
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/middleware.go
  * @Description:
  *
@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/internal/domain"
 	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/pkg/jwt"
 	"github.com/gin-gonic/gin"
 	jwtv5 "github.com/golang-jwt/jwt/v5"
@@ -25,28 +26,28 @@ func AuthMiddleware(jwtService jwt.JWTService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "未提供认证令牌"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, domain.NewErrorResponse("401", "未提供认证令牌"))
 			return
 		}
 
 		// 提取Bearer令牌
 		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 		if tokenString == authHeader {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "无效的令牌格式"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, domain.NewErrorResponse("401", "无效的令牌格式"))
 			return
 		}
 
 		// 验证令牌
 		token, err := jwtService.ValidateToken(tokenString)
 		if err != nil || !token.Valid {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "无效或过期的令牌"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, domain.NewErrorResponse("401", "无效或过期的令牌"))
 			return
 		}
 
 		// 提取声明信息
 		claims, ok := token.Claims.(jwtv5.MapClaims)
 		if !ok {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "无效的令牌声明"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, domain.NewErrorResponse("401", "无效的令牌声明"))
 			return
 		}
 
