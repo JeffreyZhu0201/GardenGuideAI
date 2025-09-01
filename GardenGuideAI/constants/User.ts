@@ -1,6 +1,16 @@
+/*
+ * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @Date: 2025-09-01 00:43:43
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-09-01 01:14:23
+ * @FilePath: /GardenGuideAI/GardenGuideAI/constants/User.ts
+ * @Description: 用户实体
+ * 
+ * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
+ */
 
 
-interface User{
+export interface User{
     email:string,
     password:string
 }

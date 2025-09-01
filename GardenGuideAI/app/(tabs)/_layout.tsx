@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 03:52:03
+ * @LastEditTime: 2025-09-01 01:44:21
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/_layout.tsx
  * @Description: 
  * 

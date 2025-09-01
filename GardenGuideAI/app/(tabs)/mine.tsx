@@ -1,40 +1,46 @@
-/*
- * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @Date: 2025-08-31 01:12:40
- * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 03:50:41
- * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/mine.tsx
- * @Description: 我的页面
- * 
- * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
- */
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useCallback } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
 
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { Image } from 'expo-image';
-import { Platform, ScrollView, StyleSheet } from 'react-native';
-import { HelloWave } from '@/components/HelloWave';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import useStore from '@/app/store/store';
-import { useCallback, useEffect } from 'react';
-import { useFocusEffect } from "@react-navigation/native";
+import UserInfo from "@/components/UserInfo";
+import { Button } from "@react-navigation/elements";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+// Define the RootStackParamList type
+export type RootStackParamList = {
+  Mine: undefined;
+  LoginPage: undefined;
+  RegisterPage: undefined;
+};
 
 export default function MineScreen() {
+  const { setHeaderTitle, userInfo } = useStore();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Mine'>>();
 
-    const { setHeaderTitle } = useStore();
-      // 在 useEffect 中更新标题
-    useFocusEffect(
-        useCallback(() => {
-            setHeaderTitle("我的");
-        }, [setHeaderTitle]) // 添加依赖项
-    );
-      
-    return (
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <ThemedText>123</ThemedText>
-        <ThemedText>456</ThemedText>
-        </ScrollView>
-    );
+  useFocusEffect(
+    useCallback(() => {
+      setHeaderTitle("我的");
+    }, [setHeaderTitle])
+  );
+
+  return (
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      {userInfo ? (
+        <>
+          <ThemedText>User Info:</ThemedText>
+          <UserInfo userInfo={userInfo} />
+        </>
+      ) : (
+        <>
+          <ThemedText>Please Login or Register</ThemedText>
+          <Button onPress={() => navigation.navigate('LoginPage')}>Login</Button>
+          <Button onPress={() => navigation.navigate('RegisterPage')}>Register</Button>
+        </>
+      )}
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
