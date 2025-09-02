@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-31 01:55:53
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 00:47:54
+ * @LastEditTime: 2025-09-02 09:33:43
  * @FilePath: /GardenGuideAI/GardenGuideAI/constants/Identify.ts
  * @Description: 
  * 
@@ -22,5 +22,5 @@ interface IdentifyConfig {
 export const IdentifyConfig: IdentifyConfig = {
     IDENTIFY_API: 'identify',
     DEEPSEEK_API: 'deepseek',   
-    AUTH_TOKEN: 'Bearer 123456'
+    AUTH_TOKEN: ''
 };

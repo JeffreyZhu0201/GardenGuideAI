@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 00:44:51
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 04:33:50
+ * @LastEditTime: 2025-09-02 09:39:00
  * @FilePath: /GardenGuideAI/GardenGuideAI/constants/SystemConfig.ts
  * @Description: 系统配置
  * 
@@ -10,9 +10,12 @@
  */
 
 interface SystemConfig{
-    BASEURL:string
+    GOBASEURL:string,
+    IDENTIFYBASETURL:string
 }
 
 export const SystemConfig:SystemConfig = {
-    BASEURL:'charming_lalande.orb.local:8080',
+    GOBASEURL:'http://192.168.108.76:8080/api/v1',
+    IDENTIFYBASETURL:"http://192.168.108.76:8000/api/v1/"
+    
 }

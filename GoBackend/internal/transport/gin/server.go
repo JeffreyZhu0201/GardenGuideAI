@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:20
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 02:51:46
+ * @LastEditTime: 2025-09-01 23:09:01
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/server.go
  * @Description:
  *
@@ -12,6 +12,7 @@
 package gin
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/internal/repository"
@@ -148,7 +149,18 @@ func (s *Server) Run(addr string) error {
  */
 func corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Header("Access-Control-Allow-Origin", "*")
+		// If an Origin header exists, echo it back and allow credentials.
+		// If no Origin is present, fall back to wildcard for non-browser clients.
+		origin := c.Request.Header.Get("Origin")
+		if origin == "" {
+			c.Header("Access-Control-Allow-Origin", "*")
+		} else {
+			c.Header("Access-Control-Allow-Origin", origin)
+			c.Header("Access-Control-Allow-Credentials", "true")
+		}
+
+		log.Default().Println("CORS Origin:", origin)
+
 		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
 		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
 
@@ -156,6 +168,7 @@ func corsMiddleware() gin.HandlerFunc {
 			c.AbortWithStatus(204)
 			return
 		}
+
 		c.Next()
 	}
 }

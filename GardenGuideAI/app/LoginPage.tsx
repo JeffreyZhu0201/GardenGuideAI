@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 01:27:08
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 02:46:42
+ * @LastEditTime: 2025-09-02 09:02:56
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/LoginPage.tsx
  * @Description: 登陆页面
  * 
@@ -10,35 +10,45 @@
  */
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import {RootStackParamList} from "./(tabs)/mine"
-import { NativeStackNavigationProp } from  '@react-navigation/native-stack';
+import { RootStackParamList } from "./(tabs)/mine"
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import useStore from './store/store';
 import { User } from '@/constants/User';
 import { useCameraPermissions } from 'expo-camera';
-import {Login} from "../network/userApi"
+import { Login } from "../network/userApi"
+
 
 export default function LoginPage() {
-  const {userInfo ,setUserInfo,token,setToken} = useStore()
+  const { userInfo, setUserInfo, token, setToken } = useStore()
 
-  const [currentUserEmail,setCurrentUserEmail] = useState<string>("")
-  const [currentUserPassword,setCurrentUserPassword] = useState<string>("")
+  const [currentUserEmail, setCurrentUserEmail] = useState<string>("")
+  const [currentUserPassword, setCurrentUserPassword] = useState<string>("")
 
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'LoginPage'>>();
-  
-  const handleLogin = async (Email:string,Password:string) => {
+
+  const handleLogin = async (Email: string, Password: string) => {
     // Implement your login logic here
-    console.log('Logging in with:', userInfo?.email, userInfo?.password);
-    console.log(Email,Password)
-    const response = await Login(Email,Password)
+    console.log('Logging in with:', Email, Password);
+    const response = await Login(Email, Password)
 
-    console.log(response)
-    // setToken(response.token)
-    
-    // You would typically make an API call here to authenticate the user
-  };
-
+    if (response.code == 200 && response.data) {
+      console.log(response.data.token);
+      setToken(response.data.token || "")
+      setUserInfo({
+        email: Email,
+        password: Password
+      })
+      console.log("Logged in successfully")
+      alert("Logged in successfully")
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      navigation.goBack()
+    }else{
+      alert(response.message)
+      navigation.navigate("Mine")
+    }
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -55,7 +65,7 @@ export default function LoginPage() {
         value={currentUserPassword}
         onChangeText={setCurrentUserPassword}
       />
-      <Button title="Login" onPress={() => handleLogin(currentUserEmail,currentUserPassword)} />
+      <Button title="Login" onPress={() => handleLogin(currentUserEmail, currentUserPassword)} />
     </View>
   );
 };

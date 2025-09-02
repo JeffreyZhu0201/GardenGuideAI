@@ -1,13 +1,4 @@
-/*
- * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @Date: 2025-08-31 02:12:09
- * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 02:20:55
- * @FilePath: /GardenGuideAI/GardenGuideAI/utils/utils.ts
- * @Description:  工具类
- * 
- * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
- */
+import * as FileSystem from 'expo-file-system';
 
 type RouteParams = Record<string, string | number>;
 type QueryParams = Record<string, string | number | boolean>;
@@ -55,3 +46,23 @@ export function buildURL(
   
   return fullPath;
 }
+
+export async function base64ToFile(base64String: string, filename = 'image.jpeg'): Promise<string> {
+  // Accept both "data:<mime>;base64,..." and raw base64 strings from expo-camera
+  let rawBase64 = base64String;
+  let mimeType = 'image/jpeg';
+
+  if (base64String.startsWith('data:')) {
+    const parts = base64String.split(';base64,');
+    mimeType = parts[0]?.split(':')[1] || mimeType;
+    rawBase64 = parts[1] || '';
+  }
+
+  const dir = FileSystem.documentDirectory || '';
+  const fileUri = `${dir}${filename}`;
+
+  // write base64 to disk and return the file URI
+  await FileSystem.writeAsStringAsync(fileUri, rawBase64, { encoding: FileSystem.EncodingType.Base64 });
+
+  return fileUri;
+};
