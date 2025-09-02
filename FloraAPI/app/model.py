@@ -2,13 +2,12 @@
 Author: JeffreyZhu JeffreyZhu0201@gmail.com
 Date: 2025-08-28 09:34:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-08-30 08:46:03
-FilePath: /My_SelfMTL/home/students/undergraduate/zhuzy/code/经典模型复现/UNET/app copy/model.py
+LastEditTime: 2025-09-02 11:01:41
+FilePath: /GardenGuideAI/FloraAPI/app/model.py
 Description: 
 
 Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
 '''
-
 
 from typing import OrderedDict
 import torch

@@ -2,7 +2,7 @@
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-29 13:47:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-09-02 09:44:19
+LastEditTime: 2025-09-02 11:01:31
 FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
@@ -32,8 +32,6 @@ app = FastAPI(title="FloraAPI", description="植物识别API")
 v1 = APIRouter(prefix="/api/v1")  # 新增版本路由
 
 identifyModel = IdentifyFlora(Config=Config)
-
-
 
 id_to_cat = read_json_file("app/checkpoints/category_mapping.json")
 np.random.seed(42)

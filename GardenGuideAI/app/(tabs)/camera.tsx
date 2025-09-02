@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 10:41:40
+ * @LastEditTime: 2025-09-02 10:54:18
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/camera.tsx
  * @Description: 相机识别页面
  * 
@@ -27,13 +27,12 @@ export default function CameraPage() {
 
   const ref = useRef<CameraView>(null);
 
-  // key used to remount CameraView when screen gains focus so the camera "refreshes"
   const [cameraKey, setCameraKey] = useState<number>(0);
 
   useFocusEffect(
     useCallback(() => {
-      // bump key to force remount on focus
       setCameraKey(k => k + 1);
+      setFacing('back');
     }, [])
   );
 
