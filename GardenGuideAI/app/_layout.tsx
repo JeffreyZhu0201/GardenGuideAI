@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 16:58:02
+ * @LastEditTime: 2025-09-02 17:13:00
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/_layout.tsx
  * @Description: 应用根布局
  * 
@@ -36,9 +36,14 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: true, headerTitle: headerTitle || "GardenGuideAI"}} />
         <Stack.Screen name="LoginPage" options={{headerShown: true}} />
         <Stack.Screen name="RegisterPage" options={{headerShown: true}} />
-        <Stack.Screen name="AccountPage" options={{headerShown: true, headerTitle: "Account"}} />
+
+
+        <Stack.Screen name="HistoryPage" options={{headerShown: true, headerTitle: "History"}} />
         <Stack.Screen name="LikePage" options={{headerShown: true, headerTitle: "Like"}} />
+
+        <Stack.Screen name="SettingsPage" options={{headerShown: true, headerTitle: "Settings"}} />
         <Stack.Screen name="+not-found" />
+        
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

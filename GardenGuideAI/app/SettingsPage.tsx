@@ -1,9 +1,9 @@
 /*
- * @Date: 2025-09-02 16:01:12
+ * @Date: 2025-09-02 15:59:13
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 17:19:20
- * @FilePath: /GardenGuideAI/GardenGuideAI/app/LikePage.tsx
- * @Description: 
+ * @LastEditTime: 2025-09-02 17:19:40
+ * @FilePath: /GardenGuideAI/GardenGuideAI/app/SettingsPage.tsx
+ * @Description: 账号页
  */
 
 
@@ -19,15 +19,17 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { User } from "@/constants/User";
 import { ThemedView } from "@/components/ThemedView";
 import ToolCard from "@/components/ToolCard";
-import {RootStackParamList} from '@/app/(tabs)/mine'
+import { MineAccountConstant,MineSettingConstant } from '@/constants/MineTools'
 
-export default function Like() {
+import { RootStackParamList } from "./(tabs)/mine";
 
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'LikePage'>>();
+export default function SettingsPage() {
 
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'SettingsPage'>>();
+    
     return (
         <ThemedView style={[styles.Container, { height: '100%' }]}>
-            <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]}>Like Screen</ThemedText>
+            <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]}>Account Screen</ThemedText>
         </ThemedView>
     );
 }

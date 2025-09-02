@@ -1,8 +1,8 @@
 /*
  * @Date: 2025-09-02 15:59:13
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 16:57:41
- * @FilePath: /GardenGuideAI/GardenGuideAI/app/AccountPage.tsx
+ * @LastEditTime: 2025-09-02 17:18:10
+ * @FilePath: /GardenGuideAI/GardenGuideAI/app/HistoryPage.tsx
  * @Description: 账号页
  */
 
@@ -19,16 +19,17 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { User } from "@/constants/User";
 import { ThemedView } from "@/components/ThemedView";
 import ToolCard from "@/components/ToolCard";
-import { MineTools } from '@/constants/MineTools'
+import { MineAccountConstant,MineSettingConstant } from '@/constants/MineTools'
+
 import { RootStackParamList } from "./(tabs)/mine";
 
-export default function Account() {
+export default function HistoryPage() {
 
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'AccountPage'>>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'HistoryPage'>>();
     
     return (
         <ThemedView style={[styles.Container, { height: '100%' }]}>
-            <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]}>Account Screen</ThemedText>
+            <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]}>History Screen</ThemedText>
         </ThemedView>
     );
 }
@@ -36,15 +37,15 @@ export default function Account() {
 const styles = StyleSheet.create({
     Container:{
         height: '100%',
+        justifyContent: 'center',
+        display: 'flex',
     },
     BoldFont: {
         display: 'flex',
-        alignItems: 'center',
         fontWeight: '600',
         fontSize: 22,
-        textAlignVertical: 'center',
-        height: "100%",
-        color: '#ffffffff',
+        textAlign: 'center',
+        color: '#000000ff',
     },
 })
 

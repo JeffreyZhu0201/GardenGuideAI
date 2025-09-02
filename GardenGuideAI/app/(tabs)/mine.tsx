@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-01 21:35:23
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 16:53:20
+ * @LastEditTime: 2025-09-02 17:14:12
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/mine.tsx
  * @Description: 
  */
@@ -18,7 +18,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { User } from "@/constants/User";
 import { ThemedView } from "@/components/ThemedView";
 import ToolCard from "@/components/ToolCard";
-import { MineTools } from '@/constants/MineTools'
+import { MineAccountConstant, MineSettingConstant } from '@/constants/MineTools'
 
 
 // Define the RootStackParamList type
@@ -26,8 +26,9 @@ export type RootStackParamList = {
   "Mine": undefined;
   "LoginPage": undefined;
   "RegisterPage": undefined;
-  "AccountPage": undefined,
-  "LikePage": undefined
+  "HistoryPage": undefined,
+  "LikePage": undefined,
+  "SettingsPage": undefined
 };
 
 const blurhash =
@@ -99,18 +100,32 @@ export default function MineScreen() {
       )}
 
 
-      {/* 工具卡片 */}
-      <ThemedView style={[styles.toolsContainer]}>
-        {/* <ThemedText style={[{ fontSize: 20, fontWeight: 'bold', color: '#75797dff' }]}>Settings</ThemedText> */}
+      {/* Account卡片 */}
+      <ThemedView style={[styles.toolsContainer,{marginTop:16}]}>
         <ThemedView style={{ borderRadius: 6, overflow: 'hidden' }}>
           {
-            MineTools.map(element => {
+            MineAccountConstant.map(element => {
               return <ToolCard key={element.title} icon={element.icon} title={element.title} description={element.description} screen={element.navigate} />
             })
           }
 
         </ThemedView>
       </ThemedView>
+
+
+      {/* 设置卡片 */}
+      <ThemedText style={[{ fontSize: 12, fontWeight: 'bold', color: '#75797dff' ,marginTop: 20}]}>Settings</ThemedText>
+      <ThemedView style={[styles.toolsContainer]}>
+        <ThemedView style={{ borderRadius: 6, overflow: 'hidden' }}>
+          {
+            MineSettingConstant.map(element => {
+              return <ToolCard key={element.title} icon={element.icon} title={element.title} description={element.description} screen={element.navigate} />
+            })
+          }
+
+        </ThemedView>
+      </ThemedView>
+
     </ThemedView>
   );
 }
@@ -143,8 +158,8 @@ const styles = StyleSheet.create({
   BoldFont: {
     display: 'flex',
     alignItems: 'center',
-    fontWeight: '600',
-    fontSize: 22,
+    fontWeight: '800',
+    fontSize: 20,
     textAlignVertical: 'center',
     height: "100%",
     color: '#ffffffff',
@@ -153,7 +168,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     gap: 0,
-    marginTop: 20,
+    marginTop: 0,
     borderRadius: 10
   }
 });
