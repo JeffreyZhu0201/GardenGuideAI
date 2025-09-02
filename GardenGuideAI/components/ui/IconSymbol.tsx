@@ -1,3 +1,10 @@
+/*
+ * @Date: 1985-10-26 16:15:00
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-09-02 11:30:43
+ * @FilePath: /GardenGuideAI/GardenGuideAI/components/ui/IconSymbol.tsx
+ * @Description: 
+ */
 // Fallback for using MaterialIcons on Android and web.
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -16,6 +23,7 @@ type IconSymbolName = keyof typeof MAPPING;
 const MAPPING = {
   'house.fill': 'home',
   'paperplane.fill': 'send',
+  'person.fill': 'person',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
 } as IconMapping;

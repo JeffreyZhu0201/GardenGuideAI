@@ -2,14 +2,13 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 01:44:21
+ * @LastEditTime: 2025-09-02 11:29:07
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/_layout.tsx
  * @Description: 
  * 
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
 import { Tabs } from 'expo-router';
-import React from 'react';
 import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
@@ -53,7 +52,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="mine"
         options={{
-          title: 'Mine',
+          title: 'Profile',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.fill" color={color} />,
         }}
       />
