@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 15:01:58
+ * @LastEditTime: 2025-09-02 19:35:32
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/index.tsx
  * @Description: 首页
  *
@@ -69,7 +69,7 @@ export default function HomeScreen() {
   // Set header title when the screen is focused
   useFocusEffect(
     useCallback(() => {
-      setHeaderTitle('社区');
+      setHeaderTitle('Community');
     }, [setHeaderTitle])
   );
 

@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 11:29:07
+ * @LastEditTime: 2025-09-02 19:34:01
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/_layout.tsx
  * @Description: 
  * 
@@ -19,6 +19,8 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  
 
   return (
     <Tabs

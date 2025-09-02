@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-31 01:19:14
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 09:50:08
+ * @LastEditTime: 2025-09-02 23:14:14
  * @FilePath: /GardenGuideAI/GardenGuideAI/network/identifyApi.ts
  * @Description:    识别相关接口
  * 
@@ -13,7 +13,6 @@ import { IdentifyConfig } from "@/constants/Identify";
 import { SystemConfig } from "@/constants/SystemConfig";
 import { joinRoutes, buildURL } from '@/utils/utils'
 import axios from "axios";
-
 import * as Network from 'expo-network';
 
 interface IdentifyResponseData {
@@ -28,20 +27,20 @@ interface IdentifyResponse {
 }
 
 interface DeepSeekResponse {
-  code: number;
-  message: string;
-  answer: string; // 修正响应字段
+    code: number;
+    message: string;
+    answer: string; // 修正响应字段
 }
 
 function getMimeTypeFromFilename(filename: string): string {
-  const ext = filename.split('.').pop()?.toLowerCase() || '';
-  switch (ext) {
-    case 'png': return 'image/png';
-    case 'jpg':
-    case 'jpeg': return 'image/jpeg';
-    case 'gif': return 'image/gif';
-    default: return 'application/octet-stream';
-  }
+    const ext = filename.split('.').pop()?.toLowerCase() || '';
+    switch (ext) {
+        case 'png': return 'image/png';
+        case 'jpg':
+        case 'jpeg': return 'image/jpeg';
+        case 'gif': return 'image/gif';
+        default: return 'application/octet-stream';
+    }
 }
 
 export const identifyPlant = async (
@@ -54,16 +53,16 @@ export const identifyPlant = async (
         // normalize file URI
         let uri = fileUri;
         if (!uri.startsWith('file://') && !uri.startsWith('content://')) {
-          uri = `file://${uri}`;
+            uri = `file://${uri}`;
         }
 
         const filename = uri.split('/').pop() || `photo_${Date.now()}.jpg`;
         const mimeType = getMimeTypeFromFilename(filename);
 
         formData.append('file', {
-          uri,
-          name: filename,
-          type: mimeType
+            uri,
+            name: filename,
+            type: mimeType
         } as any);
 
         const base = (SystemConfig.IDENTIFYBASETURL || '').replace(/\/$/, '');
@@ -94,26 +93,60 @@ export const identifyPlant = async (
     }
 };
 
-export const deepseekPlant = async (
-    question: string,
-    token: string
-): Promise<IdentifyResponse> => {
 
-    const query = {
-        question : question
-    }
 
-    const URL = buildURL(SystemConfig.IDENTIFYBASETURL, IdentifyConfig.DEEPSEEK_API, {}, query);
-    const response = await fetch(URL, {
-        method: 'POST',
-        headers: {
-            'authorization': `Bearer ${token}`
-        }
+
+
+
+export async function deepseekPlantStream(
+  question: string,
+  token: string,
+  onChunk: (chunk: string) => void,
+  onError: (err: Error) => void,
+  options?: { signal?: AbortSignal; onDone?: () => void }
+): Promise<void> {
+  try {
+    const base = ("https://api.deepseek.com/chat/completions").replace(/\/$/, '');
+    const path = (IdentifyConfig.DEEPSEEK_API || '').replace(/^\//, '');
+    const url = `${base}/${path}?question=${encodeURIComponent(question)}`;
+
+    const ip = await Network.getIpAddressAsync();
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${token}`,
+        Origin: `http://${ip}:8081`,
+      },
+      signal: options?.signal,
     });
 
-    if (!response.ok) {
-        throw new Error(`识别请求失败: ${response.statusText}`);
+    if (!res.ok) {
+      const txt = await res.text().catch(() => '');
+      throw new Error(`DeepSeek 请求失败 ${res.status} ${res.statusText} ${txt}`);
     }
 
-    return response.json();
-};
+    if (!res.body) {
+      throw new Error('响应体为空，后端未返回流数据');
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder('utf-8');
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, { stream: true });
+      onChunk(chunk);
+    }
+
+    options?.onDone?.();
+  } catch (err: any) {
+    // 如果是 abort 导致的错误，不必弹 alert，可直接返回
+    if (err?.name === 'AbortError') {
+      console.log('deepseek stream aborted');
+      return;
+    }
+    console.error('deepseekPlantStream error:', err);
+    onError(err instanceof Error ? err : new Error(String(err)));
+  }
+}

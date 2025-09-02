@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-02 14:44:38
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 16:56:45
+ * @LastEditTime: 2025-09-02 20:16:11
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/ToolCard.tsx
  * @Description: 工具卡片
  */
@@ -20,27 +20,27 @@ import { User } from "@/constants/User";
 import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "./ui/IconSymbol";
 import { RollInRight } from "react-native-reanimated";
-import {RootStackParamList} from '@/app/(tabs)/mine'
+import { RootStackParamList } from '@/app/(tabs)/mine'
 
 const blurhash =
     '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
-export default function ToolCard({ icon, title, description,screen}: { icon: ImageSource, title: string, description: string, screen: string }) {
+export default function ToolCard({ icon, title, description, screen }: { icon: ImageSource, title: string, description: string, screen: string }) {
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Mine'>>();
-      
+
     return (
-        <Pressable onPress={()=>{navigation.navigate(screen as keyof typeof navigation.navigate)}}>
+        <Pressable onPress={() => { navigation.navigate(screen as keyof typeof navigation.navigate) }}>
             <ThemedView style={[styles.Container]}>
-            <ThemedView style={styles.ToolCardContainer} >
-                <Image source={ icon as ImageSource} placeholder={blurhash} style={[styles.image, { backgroundColor: "#ffffffff" }]} />
-                <ThemedView style={{ flexDirection: 'column', display: 'flex', flex: 1 }}>
-                    <ThemedText style={[styles.BoldFont, { fontSize: 16, fontWeight: '600' }]}>{title}</ThemedText>
-                    <ThemedText style={[styles.BoldFont, { fontSize: 12, color: '#8b9196ff' }]}>{description}</ThemedText>
+                <ThemedView style={styles.ToolCardContainer} >
+                    <Image source={icon as ImageSource} placeholder={blurhash} style={[styles.image, { backgroundColor: "#ffffffff" }]} />
+                    <ThemedView style={{ flexDirection: 'column', display: 'flex', flex: 1 }}>
+                        <ThemedText style={[styles.BoldFont, { fontSize: 16, fontWeight: '600' }]}>{title}</ThemedText>
+                        <ThemedText style={[styles.BoldFont, { fontSize: 12, color: '#8b9196ff' }]}>{description}</ThemedText>
+                    </ThemedView>
+                    <Image source={require('@/assets/icons/right.png')} style={[{ height: 24, width: 24 }]} />
                 </ThemedView>
-                <Image source={require('@/assets/icons/right.png')} style={[{ height: 24, width: 24 }]} />
             </ThemedView>
-        </ThemedView>
         </Pressable>
     );
 }
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     },
     ToolCardContainer: {
         display: 'flex',
+        flex: 1,
         flexDirection: 'row',
         backgroundColor: '#ffffffff',
         alignItems: 'center',
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         textAlignVertical: 'center',
-        color: '#2e78b7',
+        color: '#000000ff',
         backgroundColor: 'transparent',
     }
 

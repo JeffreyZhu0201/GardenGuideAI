@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-31 01:29:19
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 01:20:58
+ * @LastEditTime: 2025-09-02 20:32:34
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/store/store.ts
  * @Description: 全局状态管理
  * 
@@ -19,6 +19,10 @@ type Store = {
 
   token: string | null
   setToken: (token: string) => void;
+
+  fileUri: string | null;
+  setFileUri: (uri: string | null) => void;
+
 };
 
 const useStore = create<Store>((set) => ({
@@ -29,7 +33,10 @@ const useStore = create<Store>((set) => ({
   setUserInfo: (user) => set({ userInfo: user }),
 
   token: null,
-  setToken: (token) => set({ token: token })
+  setToken: (token) => set({ token: token }),
+
+  fileUri: null,
+  setFileUri: (uri: string | null) => set({ fileUri: uri }),
 }));
 
 export default useStore;
