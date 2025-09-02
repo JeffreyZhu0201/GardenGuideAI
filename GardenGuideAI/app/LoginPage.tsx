@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 01:27:08
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 09:02:56
+ * @LastEditTime: 2025-09-02 10:32:22
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/LoginPage.tsx
  * @Description: 登陆页面
  * 
@@ -10,7 +10,7 @@
  */
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-import { RootStackParamList } from "./(tabs)/mine"
+import {RootStackParamList} from "./(tabs)/mine"
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import useStore from './store/store';
@@ -44,9 +44,11 @@ export default function LoginPage() {
       alert("Logged in successfully")
       await new Promise(resolve => setTimeout(resolve, 1000));
       navigation.goBack()
+      // navigation.navigate('Mine')
     }else{
       alert(response.message)
-      navigation.navigate("Mine")
+      navigation.goBack()
+      // navigation.navigate('Mine')
     }
   }
   return (
