@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-01 21:35:23
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 12:01:24
+ * @LastEditTime: 2025-09-02 16:53:20
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/mine.tsx
  * @Description: 
  */
@@ -17,21 +17,28 @@ import { Button } from "@react-navigation/elements";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { User } from "@/constants/User";
 import { ThemedView } from "@/components/ThemedView";
+import ToolCard from "@/components/ToolCard";
+import { MineTools } from '@/constants/MineTools'
+
 
 // Define the RootStackParamList type
 export type RootStackParamList = {
   "Mine": undefined;
   "LoginPage": undefined;
   "RegisterPage": undefined;
+  "AccountPage": undefined,
+  "LikePage": undefined
 };
 
 const blurhash =
   '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
 
-  
+
 export default function MineScreen() {
   const { setHeaderTitle, userInfo, setUserInfo, token, setToken } = useStore();
+
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Mine'>>();
+
 
   const [userEmail, setUserEmail] = useState("");
 
@@ -39,7 +46,7 @@ export default function MineScreen() {
     if (token && userInfo) {
       setUserEmail(userInfo.email);
     }
-    else{
+    else {
       setUserEmail("");
     }
   };
@@ -55,18 +62,27 @@ export default function MineScreen() {
   }, [userInfo, token]);
 
   return (
-    <ThemedView style={{ height: '100%' }}>
+    <ThemedView style={[styles.Container, { height: '100%' }]}>
       {userInfo ? (
         <>
-          <ThemedText>User Info:</ThemedText>
+          <ThemedView style={styles.LoginRegisterContainer}>
+            <Image
+              style={styles.image}
+              source={require('@/assets/images/defaultUser.png')}
+              placeholder={{ blurhash }}
+              contentFit="cover"
+              transition={1000}
+            />
+            <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]} onPress={() => navigation.navigate('LoginPage')}>{userInfo.email}</ThemedText>
+          </ThemedView>
           {/* <UserInfo userInfo={userInfo} /> */}
-          <ThemedText>Email: {userEmail}</ThemedText>
+          {/* <ThemedText>Email: {userEmail}</ThemedText>
           <Button onPress={() => {
             setUserInfo(undefined as unknown as User);
             setToken(undefined as unknown as string);
           }} >
             Logout
-          </Button>
+          </Button>*/}
         </>
       ) : (
         <ThemedView style={styles.LoginRegisterContainer}>
@@ -77,47 +93,69 @@ export default function MineScreen() {
             contentFit="cover"
             transition={1000}
           />
-          <ThemedText style={styles.BoldFont} onPress={() => navigation.navigate('LoginPage')}>Login / </ThemedText>
-          <ThemedText style={styles.BoldFont} onPress={() => navigation.navigate('RegisterPage')}>Register</ThemedText>
+          <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]} onPress={() => navigation.navigate('LoginPage')}>Login / </ThemedText>
+          <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]} onPress={() => navigation.navigate('RegisterPage')}>Register</ThemedText>
         </ThemedView>
       )}
-      
+
+
+      {/* 工具卡片 */}
+      <ThemedView style={[styles.toolsContainer]}>
+        {/* <ThemedText style={[{ fontSize: 20, fontWeight: 'bold', color: '#75797dff' }]}>Settings</ThemedText> */}
+        <ThemedView style={{ borderRadius: 6, overflow: 'hidden' }}>
+          {
+            MineTools.map(element => {
+              return <ToolCard key={element.title} icon={element.icon} title={element.title} description={element.description} screen={element.navigate} />
+            })
+          }
+
+        </ThemedView>
+      </ThemedView>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollViewContent: {
+  Container: {
     paddingBottom: 100,
-    paddingHorizontal: 20,
+    backgroundColor: '#f0f0f0ff',
+    margin: 12,
   },
-  userAvatar:{
-
+  userAvatar: {
   },
   LoginRegisterContainer: {
-    flex: 0.15,
+    minHeight: 128,
     display: 'flex',
     flexDirection: 'row',
     height: 1,
-    backgroundColor: '#eee',
+    backgroundColor: '#0c3e80ff',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    margin:10
+    borderRadius: 8,
+    padding: 12,
   },
   image: {
-    height:30,
-    width: 30,
-    backgroundColor: '#0553',
-    borderRadius: 15,
-    display: 'flex',
-    marginRight: 10,
+    height: 72,
+    width: 72,
+    backgroundColor: 'rgba(115, 201, 201, 0.2)',
+    borderRadius: 50,
+    marginRight: 12,
   },
   BoldFont: {
-    fontWeight: 'bold',
-    fontSize: 24,
-    height: 20,
+    display: 'flex',
+    alignItems: 'center',
+    fontWeight: '600',
+    fontSize: 22,
+    textAlignVertical: 'center',
+    height: "100%",
+    color: '#ffffffff',
+  },
+  toolsContainer: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 0,
+    marginTop: 20,
+    borderRadius: 10
   }
-
 });
 
 

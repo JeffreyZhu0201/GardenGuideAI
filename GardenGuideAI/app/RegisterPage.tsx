@@ -2,8 +2,8 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 01:27:08
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 10:32:22
- * @FilePath: /GardenGuideAI/GardenGuideAI/app/LoginPage.tsx
+ * @LastEditTime: 2025-09-02 16:50:27
+ * @FilePath: /GardenGuideAI/GardenGuideAI/app/RegisterPage.tsx
  * @Description: 登陆页面
  * 
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
@@ -15,7 +15,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import useStore from './store/store';
 import { User } from '@/constants/User';
-import { useCameraPermissions } from 'expo-camera';
+// import { useCameraPermissions } from 'expo-camera';
 import { Login } from "../network/userApi"
 
 
@@ -25,8 +25,7 @@ export default function LoginPage() {
   const [currentUserEmail, setCurrentUserEmail] = useState<string>("")
   const [currentUserPassword, setCurrentUserPassword] = useState<string>("")
 
-
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'LoginPage'>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'RegisterPage'>>();
 
   const handleLogin = async (Email: string, Password: string) => {
     // Implement your login logic here

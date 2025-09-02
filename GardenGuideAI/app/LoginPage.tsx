@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 01:27:08
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 10:32:22
+ * @LastEditTime: 2025-09-02 16:48:09
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/LoginPage.tsx
  * @Description: 登陆页面
  * 
@@ -25,9 +25,9 @@ export default function LoginPage() {
   const [currentUserEmail, setCurrentUserEmail] = useState<string>("")
   const [currentUserPassword, setCurrentUserPassword] = useState<string>("")
 
-
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'LoginPage'>>();
 
+  
   const handleLogin = async (Email: string, Password: string) => {
     // Implement your login logic here
     console.log('Logging in with:', Email, Password);
