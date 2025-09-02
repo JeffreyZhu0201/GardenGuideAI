@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-01 21:35:23
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 17:14:12
+ * @LastEditTime: 2025-09-02 19:21:18
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/mine.tsx
  * @Description: 
  */
@@ -19,7 +19,7 @@ import { User } from "@/constants/User";
 import { ThemedView } from "@/components/ThemedView";
 import ToolCard from "@/components/ToolCard";
 import { MineAccountConstant, MineSettingConstant } from '@/constants/MineTools'
-
+import { Colors } from "@/constants/Colors";
 
 // Define the RootStackParamList type
 export type RootStackParamList = {
@@ -39,6 +39,7 @@ export default function MineScreen() {
   const { setHeaderTitle, userInfo, setUserInfo, token, setToken } = useStore();
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Mine'>>();
+
 
 
   const [userEmail, setUserEmail] = useState("");
@@ -74,7 +75,10 @@ export default function MineScreen() {
               contentFit="cover"
               transition={1000}
             />
-            <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]} onPress={() => navigation.navigate('LoginPage')}>{userInfo.email}</ThemedText>
+          <ThemedView style={[{flexDirection: 'column',display:'flex',flex:1,backgroundColor: 'transparent'}]}>
+            <ThemedText style={[styles.BoldFont, { fontSize:26,marginBottom:4 }]}>Hello,</ThemedText>
+            <ThemedText style={[styles.BoldFont, { fontSize:16 }]}>{userInfo.email}</ThemedText>
+          </ThemedView>
           </ThemedView>
           {/* <UserInfo userInfo={userInfo} /> */}
           {/* <ThemedText>Email: {userEmail}</ThemedText>
@@ -94,14 +98,14 @@ export default function MineScreen() {
             contentFit="cover"
             transition={1000}
           />
-          <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]} onPress={() => navigation.navigate('LoginPage')}>Login / </ThemedText>
-          <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center' }]} onPress={() => navigation.navigate('RegisterPage')}>Register</ThemedText>
+          <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center', color: `${Colors.light.LoginText}` }]} onPress={() => navigation.navigate('LoginPage')}>Login / </ThemedText>
+          <ThemedText style={[styles.BoldFont, { textAlignVertical: 'center', color: `${Colors.light.LoginText}` }]} onPress={() => navigation.navigate('RegisterPage')}>Register</ThemedText>
         </ThemedView>
       )}
 
 
       {/* Account卡片 */}
-      <ThemedView style={[styles.toolsContainer,{marginTop:16}]}>
+      <ThemedView style={[styles.toolsContainer, { marginTop: 16 }]}>
         <ThemedView style={{ borderRadius: 6, overflow: 'hidden' }}>
           {
             MineAccountConstant.map(element => {
@@ -114,7 +118,7 @@ export default function MineScreen() {
 
 
       {/* 设置卡片 */}
-      <ThemedText style={[{ fontSize: 12, fontWeight: 'bold', color: '#75797dff' ,marginTop: 20}]}>Settings</ThemedText>
+      <ThemedText style={[{ fontSize: 12, fontWeight: 'bold', color: '#75797dff', marginTop: 20 }]}>Settings</ThemedText>
       <ThemedView style={[styles.toolsContainer]}>
         <ThemedView style={{ borderRadius: 6, overflow: 'hidden' }}>
           {
@@ -139,10 +143,9 @@ const styles = StyleSheet.create({
   userAvatar: {
   },
   LoginRegisterContainer: {
-    minHeight: 128,
+    height: 128,
     display: 'flex',
     flexDirection: 'row',
-    height: 1,
     backgroundColor: '#0c3e80ff',
     alignItems: 'center',
     borderRadius: 8,
@@ -161,12 +164,12 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     fontSize: 20,
     textAlignVertical: 'center',
-    height: "100%",
     color: '#ffffffff',
   },
   toolsContainer: {
     display: "flex",
     flexDirection: "column",
+    textAlignVertical: 'center',
     gap: 0,
     marginTop: 0,
     borderRadius: 10

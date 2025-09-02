@@ -15,6 +15,7 @@ export const Colors = {
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
     card: '#fff',
+    LoginText:"#fff"
   },
   dark: {
     text: '#ECEDEE',
