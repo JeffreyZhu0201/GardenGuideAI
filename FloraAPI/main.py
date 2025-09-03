@@ -2,7 +2,7 @@
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-29 13:47:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-09-02 23:37:48
+LastEditTime: 2025-09-03 09:03:06
 FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
@@ -122,57 +122,71 @@ client = AsyncOpenAI(
     base_url="https://api.deepseek.com"  # DeepSeek API 地址[7,8](@ref)
 )
 
+# class ChatRequest(BaseModel):
+#     message: str
+#     model: Optional[str] = "deepseek-chat"  # 默认使用 deepseek-chat 模型
+#     stream: Optional[bool] = True  # 默认开启流式
+#     session_id: Optional[str] = None  # 用于多轮对话管理
+import json
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
+import asyncio
+from openai import AsyncOpenAI  # 假设使用 openai 库
+
+app = FastAPI()
+# 初始化你的 AsyncOpenAI 客户端，并配置 DeepSeek 的 base_url 和 api_key
+# client = AsyncOpenAI(api_key="your-api-key", base_url="https://api.deepseek.com")
+
 class ChatRequest(BaseModel):
     message: str
-    model: Optional[str] = "deepseek-chat"  # 默认使用 deepseek-chat 模型
-    stream: Optional[bool] = True  # 默认开启流式
-    session_id: Optional[str] = None  # 用于多轮对话管理
+    model: str = "deepseek-chat"
+    stream: bool = True
+
+
 
 @v1.post("/deepseek")
 async def chat_stream(request: ChatRequest):
-    """
-    接收用户消息，流式返回 DeepSeek 模型的回复（SSE 格式）
-    """
     try:
-        # 1. 准备对话消息
-        # 这里可以根据 request.session_id 从数据库获取历史消息，实现多轮对话
-        messages = [
-            {"role": "user", "content": request.message}
-        ]
+        messages = [{"role": "user", "content": request.message}]
 
-        # 2. 调用 DeepSeek API 的流式接口
         stream = await client.chat.completions.create(
-            model=request.model, # type: ignore
+            model=request.model,
             messages=messages, # type: ignore
-            stream=True  # 开启流式输出
+            stream=True
         ) # type: ignore
 
-        # 3. 定义异步生成器，产生 SSE 格式的数据流
         async def event_generator():
+            buffer = ""  # 初始化一个缓冲区
             try:
                 async for chunk in stream:
                     content = chunk.choices[0].delta.content
                     if content is not None:
-                        # 按照 SSE 格式 yield 数据: `data: {json_data}\n\n`
-                        yield f"data: {content}\n\n"
-                        await asyncio.sleep(0.01)  # 可选，控制发送速率避免过快
+                        buffer += content  # 将内容添加到缓冲区
+                        # 只有当缓冲区达到一定大小或遇到特定条件（如句子结束）时，才发送数据
+                        # 这里简单判断：如果缓冲区长度超过一定阈值（例如10个字符）或者内容包含常见的句子分隔符，则发送
+                        # 你也可以根据自己的需求调整缓冲策略
+                        if len(buffer) >= 10 or any(sep in buffer for sep in ('. ', '! ', '? ', '\n')):
+                            # 使用 json.dumps 确保内容被正确格式化为 JSON 字符串，避免破坏 SSE 格式
+                            yield f"data: {json.dumps({'content': buffer})}\n\n"
+                            buffer = ""  # 清空缓冲区
+                        await asyncio.sleep(0.01)
+                # 循环结束后，发送缓冲区中可能剩余的内容
+                if buffer:
+                    yield f"data: {json.dumps({'content': buffer})}\n\n"
                 yield "data: [DONE]\n\n"  # 发送结束信号
             except Exception as e:
-                yield f"data: {{'error': 'Stream processing error: {str(e)}'}}\n\n"
+                error_msg = f"{{'error': 'Stream processing error: {str(e)}'}}"
+                yield f"data: {json.dumps({'content': error_msg})}\n\n"
 
-        # 4. 返回 StreamingResponse
         return StreamingResponse(
             event_generator(),
-            media_type="text/event-stream",  # 关键：设置 SSE 的 Media Type
-            headers={
-                "Cache-Control": "no-cache",
-                "Connection": "keep-alive",
-            }
+            media_type="text/event-stream",
+            headers={"Cache-Control": "no-cache", "Connection": "keep-alive"}
         )
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
-
 
 app.include_router(v1)
 

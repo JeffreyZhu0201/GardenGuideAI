@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-02 20:17:01
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 00:35:24
+ * @LastEditTime: 2025-09-03 09:40:39
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/PostPage.tsx
  * @Description: 帖子页面
  */
@@ -18,6 +18,9 @@ import { ThemedView } from '@/components/ThemedView';
 import { useWindowDimensions } from 'react-native';
 import RenderHtml from 'react-native-render-html';
 import { Background } from '@react-navigation/elements';
+import Markdown, { MarkdownIt } from 'react-native-markdown-display';
+
+const markdownItInstance = MarkdownIt({ typographer: true }).set({ breaks: true }); // 启用 breaks 选项
 
 export default function PostScreen() {
     const { setHeaderTitle, fileUri, token } = useStore();
@@ -49,9 +52,6 @@ export default function PostScreen() {
             setDeepSeekResult(""); // 每次新的识别开始时清空之前的DeepSeek结果
             Identify();
         } else {
-            // 如果 fileUri 或 token 不存在，可能需要显示一些提示或跳转
-            // setIdentifyResult("请先选择图片并登录");
-            // setDeepSeekResult("");
         }
         // 组件卸载时，清理 EventSource 连接
         return () => {
@@ -93,11 +93,18 @@ export default function PostScreen() {
             setDeepSeekResult("生成介绍失败");
         }
     }
+
+    function removeMarkdownCodeBlockTags(input: string): string {
+        // 匹配开头的 ```markdown\n 和结尾的 ```\n
+       return input.replace('```markdown\n', '').replace('\n```', '');
+    }
+
+
     async function fetchDeepSeekStream(plantName: string) {
         const apiUrl = SystemConfig.IDENTIFYBASETURL + '/deepseek';
 
         const requestBody = {
-            message: `你是一个专业的植物专家和种植爱好者，回答的${plantName}基本信息,生长属性,养护指南,以及意义或花语。只返回html格式回答,从<html>开始,样式美观，适合阅读,适当添加表情`,
+            message: `你是一个专业的植物专家和种植爱好者，回答的${plantName}基本信息,生长属性,养护指南,以及意义或花语。只返回markdown格式回答,样式美观，适合阅读,适当添加表情,简短一点`,
             model: "deepseek-chat",
             stream: true,
         };
@@ -117,28 +124,29 @@ export default function PostScreen() {
 
             es.addEventListener('message', (event) => {
                 try {
-                    // 解析 SSE 格式的数据
                     if (event.data) {
-                        // 检查是否是结束信号
                         if (event.data === '[DONE]') {
                             es.close();
+                            console.log('Stream finished.');
                             return;
                         }
-                        // 解析 JSON 数据
-                        //    const parsedData = JSON.parse(event.data);
-                        //     if (parsedData.content) {
-                        fullContent += event.data;
-                        setDeepSeekResult(fullContent);
-                        // } else if (parsedData.error) {
-                        //     console.error('DeepSeek Stream Error:', parsedData.error);
-                        //     setDeepSeekResult(`生成介绍时出错: ${parsedData.error}`);
-                        //     es.close();
-                        // }
+
+                        const parsedData = JSON.parse(event.data); // 解析整个event.data
+                        if (parsedData.content) {
+                            fullContent += parsedData.content; // 拼接内容
+
+                            fullContent = removeMarkdownCodeBlockTags(fullContent);
+
+                            // console.log(JSON.stringify(fullContent))
+                            setDeepSeekResult(fullContent); // 更新状态
+                        } else if (parsedData.error) {
+                            console.error('DeepSeek Stream Error from backend:', parsedData.error);
+                            setDeepSeekResult(`生成介绍时出错: ${parsedData.error}`);
+                            es.close(); // 关闭连接
+                        }
                     }
                 } catch (error) {
-                    console.error('Error parsing SSE message:', error, 'Raw data:', event.data);
-
-                    // 尝试处理非标准格式的响应（如果后端返回的是纯文本）
+                    console.error('Error parsing SSE message (JSON expected):', error, 'Raw data:', event.data);
                     if (typeof event.data === 'string' && event.data !== '[DONE]') {
                         fullContent += event.data;
                         setDeepSeekResult(fullContent);
@@ -153,7 +161,7 @@ export default function PostScreen() {
 
             es.addEventListener('close', async () => {
                 console.log('SSE Connection Closed.');
-                setDeepSeekResult(prev => prev + '\n（生成完成）');
+                // setDeepSeekResult(prev => prev + '\n（生成完成）');
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 setFinishStatus(true);
             });
@@ -174,19 +182,24 @@ export default function PostScreen() {
 
             {
                 (finishStatus && deepSeekResult.length > 0)
-                    ? (<ThemedView>
-                        <RenderHtml
+                    ? (<ThemedView style={{ padding: 12, backgroundColor: '#ffffffff', borderRadius: 8 }}>
+                        {/* <RenderHtml
                             contentWidth={width}
                             source={source as any}
                         // Optional: Add tagsStyles, classesStyles, or customRenderers here
-                        />
-                    </ThemedView>)
-                    : (<ThemedView style={{backgroundColor: '#f0f0f0ff', padding: 12, borderRadius: 8 }}> 
-                        <ThemedText style={[ { fontSize: 16,fontWeight:'600',paddingVertical: 4 ,color: '#666' }]}>正在生成回答...</ThemedText>
-                        {(deepSeekResult) ? (<ThemedText style={styles.streamingText}>
+                        /> */}
+                        <Markdown markdownit={markdownItInstance}>
                             {deepSeekResult}
+                        </Markdown>
+                        <ThemedText>百科生成完成...</ThemedText>
+                    </ThemedView>)
+                    : (<ThemedView style={{ backgroundColor: '#ffffffff', padding: 12, borderRadius: 8 }}>
+                        <ThemedText style={[{ fontSize: 16, fontWeight: '600', paddingVertical: 4, color: '#666' }]}>正在生成回答...</ThemedText>
+                        {(deepSeekResult) ? (<ThemedText style={styles.streamingText}>
+                            <Markdown markdownit={markdownItInstance}>
+                                {deepSeekResult.replace(/\\n/g, '\n')}
+                            </Markdown>
                         </ThemedText>) : null}
-
                     </ThemedView>)
             }
         </ScrollView>
@@ -196,26 +209,29 @@ export default function PostScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
+        padding: 10,
         gap: 16,
     },
     resultText: {
-        fontSize: 20,
+        fontSize: 24,
+        paddingVertical: 16,
         fontWeight: 'bold',
     },
     streamingText: {
+        paddingVertical: 8,
+        paddingHorizontal: 12,
         fontSize: 12,
         lineHeight: 10,
-        color: '#999999ff', // Lighter text for secondary information
+        color: '#999999ff', 
     },
     deepSeekContainer: {
         padding: 8,
-        backgroundColor: '#f0f0f0', // Added for better visual separation
+        backgroundColor: '#f0f0f0', 
         borderRadius: 8,
     },
     descriptionText: {
         fontSize: 16,
         lineHeight: 24,
-        color: '#333', // Darker text for readability
+        color: '#333', 
     }
 });
