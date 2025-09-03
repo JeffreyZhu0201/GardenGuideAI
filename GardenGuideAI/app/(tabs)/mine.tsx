@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-01 21:35:23
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 20:32:23
+ * @LastEditTime: 2025-09-03 21:52:00
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/mine.tsx
  * @Description: 
  */
@@ -80,14 +80,6 @@ export default function MineScreen() {
                             <ThemedText style={[styles.BoldFont, { fontSize: 16 }]}>{userInfo.email}</ThemedText>
                         </ThemedView>
                     </ThemedView>
-                    {/* <UserInfo userInfo={userInfo} /> */}
-                    {/* <ThemedText>Email: {userEmail}</ThemedText>
-          <Button onPress={() => {
-            setUserInfo(undefined as unknown as User);
-            setToken(undefined as unknown as string);
-          }} >
-            Logout
-          </Button>*/}
                 </>
             ) : (
                 <ThemedView style={styles.LoginRegisterContainer}>
