@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 20:32:30
+ * @LastEditTime: 2025-09-03 22:08:28
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/index.tsx
  * @Description: 首页
  *
@@ -12,7 +12,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import Card from '@/components/Card';
 import { getAllPosts } from '@/network/postApi';
-import useStore  from '../store/store';
+import useStore from '../store/store';
 import { useFocusEffect } from 'expo-router';
 
 interface Post {
@@ -29,14 +29,36 @@ export default function HomeScreen() {
   const [postsList, setPostsList] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const {token,setHeaderTitle} = useStore()
+  const { token, setHeaderTitle } = useStore()
 
   useFocusEffect(
-      useCallback(() => {
-        setHeaderTitle('Community');
-      }, [setHeaderTitle])
-    );
-    
+    useCallback(() => {
+      setHeaderTitle('Community');
+
+      const fetchPosts = async () => {
+        try {
+          setLoading(true);
+          setError(null);
+          const response = await getAllPosts();
+          if (response && response.data) {
+            setPostsList(response.data);
+            console.log(response.data[0])
+          } else {
+            setError('Received invalid response from server');
+          }
+        } catch (err) {
+          console.error('Error fetching posts:', err);
+          setError('Failed to load posts. Please try again later.');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchPosts();
+
+    }, [setHeaderTitle])
+  );
+
   // 使用 useEffect 在组件挂载后执行数据获取
   useEffect(() => {
     const fetchPosts = async () => {
@@ -82,7 +104,7 @@ export default function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {postsList.map((item) => (
-        <Card key={item.id} id={item.id} email={item.email} image={item.image_path} content={item.content} like_count={item.like_count}/>
+        <Card key={item.id} id={item.id} email={item.email} image={item.image_path} content={item.content} like_count={item.like_count} />
       ))}
     </ScrollView>
   );
@@ -93,6 +115,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     paddingVertical: 10,
-    width:'100%'
+    width: '100%'
   },
 });

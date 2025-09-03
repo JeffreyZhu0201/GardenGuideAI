@@ -121,7 +121,7 @@ const Card = ({ id, email, image, content, like_count }: { id: string, email: st
             <ThemedView style={{ flex: 1, marginTop: 32 }}>
               <Image
                 source={require("@/assets/icons/right.png")}
-                style={[styles.arrowIcon, {}]}
+                style={[styles.arrowIcon,{ position: 'absolute', right: 5 }]}
                 accessibilityLabel="Navigate to details"
               />
             </ThemedView>
