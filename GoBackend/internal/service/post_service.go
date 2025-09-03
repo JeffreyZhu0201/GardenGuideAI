@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-03 09:45:53
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 14:43:52
+ * @LastEditTime: 2025-09-03 15:52:26
  * @FilePath: /GardenGuideAI/GoBackend/internal/service/post_service.go
  * @Description: Post 服务
  */
@@ -72,4 +72,16 @@ func (s *PostService) CreatePost(c *gin.Context, email, content string, fileHead
 	}
 
 	return post, nil
+}
+
+func (s *PostService) GetOnePost(c *gin.Context, id uint) (*domain.Post, error) {
+	return s.postRepo.FindOne(id)
+}
+
+func (s *PostService) LikePost(c *gin.Context, postID string) error {
+	return s.postRepo.LikeCountAdd(postID)
+}
+
+func (s *PostService) GetUsersPosts(email string) ([]domain.Post, error) {
+	return s.postRepo.GetUsersPosts(email)
 }

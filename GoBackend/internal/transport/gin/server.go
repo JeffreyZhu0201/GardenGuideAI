@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:20
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 14:45:35
+ * @LastEditTime: 2025-09-03 15:53:31
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/server.go
  * @Description:
  *
@@ -52,7 +52,6 @@ func NewServer(opts ...Option) *Server {
 	s.setMiddlewares()
 
 	s.registerAuthRoutes()
-
 	return s
 }
 
@@ -120,6 +119,10 @@ func (s *Server) registerAuthRoutes() {
 	postService := service.NewPostService(postRepo)
 	postHandler := NewPostHandler(postService)
 
+	likeRepo := repository.NewMysqlLikeRepository(s.db)
+	likeService := service.NewLikeService(likeRepo)
+	likeHandler := NewLikeHandler(likeService)
+
 	api := s.router.Group("/api/v1")
 	{
 		api.POST("/register", authHandler.Register)
@@ -133,12 +136,24 @@ func (s *Server) registerAuthRoutes() {
 		}
 
 		postGroup := api.Group("/posts")
-		// postGroup.Use(AuthMiddleware(s.jwtService))
+		postGroup.Use(AuthMiddleware(s.jwtService))
 		{
 			postGroup.POST("", postHandler.CreatePost)
 			postGroup.GET("/allpost", postHandler.GetAllPost)
+			postGroup.GET("/getone", postHandler.GetOnePost)
+			postGroup.POST("/like", postHandler.LikeCountAdd)
+			postGroup.GET("/userposts", postHandler.GetUsersPosts)
+		}
+
+		likeGroup := api.Group("/like")
+		likeGroup.Use(AuthMiddleware(s.jwtService))
+		{
+			likeGroup.POST("/create", likeHandler.CreateLike)
+			likeGroup.GET("/getlikes", likeHandler.GetLikesByUser)
+			likeGroup.GET("/delete", likeHandler.DeleteLike)
 		}
 	}
+
 }
 
 /**
