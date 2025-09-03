@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:20
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-01 23:09:01
+ * @LastEditTime: 2025-09-03 10:09:58
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/server.go
  * @Description:
  *
@@ -52,7 +52,9 @@ func NewServer(opts ...Option) *Server {
 
 	s.setMiddlewares()
 
-	s.registerRoutes()
+	s.registerAuthRoutes()
+
+	s.registerPostRoutes()
 	return s
 }
 
@@ -98,6 +100,7 @@ func (s *Server) setMiddlewares() {
 		gin.Logger(),
 		corsMiddleware(),
 	)
+	s.router.Static("/uploads", "./uploads")
 }
 
 // Login 用户登录
@@ -106,30 +109,42 @@ func hello(c *gin.Context) {
 }
 
 /**
- * @description: 注册路由
+ * @description: 注册认证路由
  * @return {*}
  */
-func (s *Server) registerRoutes() {
-	// 初始化认证服务和处理器
+func (s *Server) registerAuthRoutes() {
 
-	// 数据库
 	authRepo := repository.NewAuthRepository(s.db)
-	// 服务
 	authService := service.NewAuthService(authRepo, s.jwtService)
-	// 处理器
 	authHandler := NewAuthHandler(authService)
 
-	// 注册认证路由
 	api := s.router.Group("/api/v1")
 	{
 		api.POST("/register", authHandler.Register)
 		api.POST("/login", authHandler.Login)
 		api.POST("/", hello)
-		// 需要认证的路由组
+
 		authGroup := api.Group("")
 		authGroup.Use(AuthMiddleware(s.jwtService))
 		{
 			authGroup.POST("/logout", authHandler.Logout)
+		}
+	}
+}
+
+func (s *Server) registerPostRoutes() {
+	// 初始化 Post 服务和处理器
+	postRepo := repository.NewMysqlPostRepository(s.db)
+	postService := service.NewPostService(postRepo)
+	postHandler := NewPostHandler(postService)
+
+	// 注册 Post 路由
+	api := s.router.Group("/api/v1")
+	{
+		postGroup := api.Group("/posts")
+		postGroup.Use(AuthMiddleware(s.jwtService))
+		{
+			postGroup.POST("/", postHandler.CreatePost)
 		}
 	}
 }

@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:39
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-29 07:12:21
+ * @LastEditTime: 2025-09-03 10:02:03
  * @FilePath: /GardenGuideAI/GoBackend/pkg/database/mysql.go
  * @Description:
  *
@@ -47,6 +47,7 @@ func NewMySQL(dsn string) *gorm.DB {
 func autoMigrate(db *gorm.DB) error {
 	return db.AutoMigrate(
 		&domain.User{}, // 自动创建用户表
+		&domain.Post{}, // 自动创建帖子表
 		// 添加其他模型...
 	)
 }
