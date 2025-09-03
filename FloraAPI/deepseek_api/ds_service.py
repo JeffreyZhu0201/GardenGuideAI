@@ -2,7 +2,7 @@
 Author: JeffreyZhu JeffreyZhu0201@gmail.com
 Date: 2025-08-28 13:14:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-09-03 08:55:58
+LastEditTime: 2025-09-04 00:53:10
 FilePath: /GardenGuideAI/FloraAPI/deepseek_api/ds_service.py
 Description: deepseek api service
 
@@ -62,6 +62,8 @@ def get_deepseek_answer(question: str) -> str:
         stream=False
     )
     return response.choices[0].message.content if response.choices[0].message.content else "没有回答"
+
+
 '''
 description: 获取deepseek的回答
 param {str} question

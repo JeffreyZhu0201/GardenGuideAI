@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 02:12:37
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 08:39:55
+ * @LastEditTime: 2025-09-04 03:32:55
  * @FilePath: /GardenGuideAI/README.md
  * @Description: 园艺助手综合项目
  * 
@@ -183,5 +183,10 @@ npm install
 npm run start
 ```
 
+
+## 完结撒花
+到目前项目也到了结项阶段，笔者也算是收获很多。
+会想起来，从我初二接触python语言以来，这已经是我编程的第六个年头了。当时，python2还是主流，python3还没普及，笔者用Django框架做了个小博客，当时那种循序渐进的兴奋现在已经很难找到了。现在AI盛行，不像当时写原生html，js，css三件套，需要一个个字敲，用提示词很快就会上线一个小项目，甚至不需要写一行代码。而，这种方式对于我们专业开发者可能是致命的。
+对于个人而言，很反对用AI写一个完整项目，第一是那种coding的成就感被淡化了，虽然效率确实很高，但是没有那种看着一个样式一个样式实现的那种感觉，归根结底不是自己的产出。第二，AI虽然快，但是对于复杂的逻辑难以实现，经常拆东墙补西墙，只能做点玩具级的项目。最主要的是，作为学生，会对其产生依赖性，把Tab扣掉就写不了代码了。所以个人最多用AI实现一些工具类，对于一些CSS样式宁愿手敲也不用那种AI味很浓的没有灵魂的样式。
 ### 许可证
 本项目采用 MIT License 开源协议

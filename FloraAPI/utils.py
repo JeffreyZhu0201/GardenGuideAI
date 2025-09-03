@@ -1,8 +1,8 @@
 '''
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-30 14:50:55
-LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
-LastEditTime: 2025-09-01 19:29:32
+LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+LastEditTime: 2025-09-04 00:54:08
 FilePath: /GardenGuideAI/FloraAPI/utils.py
 Description: 工具函数
 
@@ -16,11 +16,9 @@ from fastapi import HTTPException, Header
 from jwt import InvalidTokenError
 import jwt
 
-# JWT配置（请根据您的实际配置修改）
 JWT_SECRET_KEY = "yawdawdawfrgtdhdtdwrdf"  # 与其他应用相同的密钥
 JWT_ALGORITHM = "HS256"
 
-# 读取JSON文件
 def read_json_file(file_path):
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -33,7 +31,6 @@ def read_json_file(file_path):
         print(f"文件 {file_path} 不是有效的JSON格式")
         return None
 
-# JWT认证依赖函数
 async def verify_token(authorization: Optional[str] = Header(None)):
     if not authorization:
         raise HTTPException(
@@ -43,7 +40,6 @@ async def verify_token(authorization: Optional[str] = Header(None)):
         )
     
     try:
-        # 提取Bearer token
         scheme, token = authorization.split()
         if scheme.lower() != "bearer":
             raise HTTPException(
@@ -52,7 +48,6 @@ async def verify_token(authorization: Optional[str] = Header(None)):
                 headers={"WWW-Authenticate": "Bearer"},
             )
         
-        # 验证JWT token
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
         return payload
         

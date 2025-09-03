@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 16:00:05
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-08-31 11:07:05
+ * @LastEditTime: 2025-09-04 01:10:35
  * @FilePath: /GardenGuideAI/FloraAPI/readme.md
  * @Description: 植物识别API
  * 
@@ -39,26 +39,30 @@
 
 ```bash
 FloraAPI/
-├── app/
-│   ├── checkpoints/            # 模型及配置文件
-│   │   └── category_mapping.json
-│   ├── dataset/                # 数据集处理脚本
-│   │   ├── download.py
-│   │   └── id_to_cat.py
-│   ├── __init__.py
-│   ├── dataset.py
-│   ├── dataVisualize.py
-│   ├── export.py               # 模型导出与推理
-│   ├── model.py                # Vision Transformer模型定义
-│   ├── predict.py              # 预测接口(已整合到export.py)
-│   ├── train.py                # 训练脚本
-│   └── utils.py                # app内工具函数
-├── deepseek_api/               # DeepSeek API集成
-│   └── ds_service.py
-├── main.py                     # FastAPI主入口
-├── readme.md                   # 项目文档
-├── requirements.txt            # Python依赖
-└── utils.py                    # 全局工具函数
+├── Dockerfile                    # Docker容器配置文件，用于部署API服务
+├── GardenGuideAI.md             # Markdown格式的API文档，包含端点规范
+├── main.py                      # FastAPI主应用程序入口点，包含路由定义
+├── readme.md                    # 项目文档，包含设置说明和API使用方法
+├── requirements.txt             # 项目Python依赖列表
+├── utils.py                     # 全局工具函数，包括JWT令牌验证
+├── app/                         # 核心应用程序模块
+│   ├── dataset.py               # 数据集加载和预处理工具
+│   ├── dataVisualize.py         # 数据可视化和绘图脚本
+│   ├── export.py                # 模型导出和推理功能
+│   ├── model.py                 # Vision Transformer模型架构定义
+│   ├── predict.py               # 预测接口（已整合到export.py中）
+│   ├── train.py                 # 模型训练脚本及配置
+│   ├── utils.py                 # 应用特定的工具函数
+│   ├── checkpoints/             # 模型检查点和配置文件
+│   │   ├── best_model.pth       # 训练好的PyTorch模型权重
+│   │   ├── category_mapping.json # 植物ID到类别名称的JSON映射
+│   │   └── training_plot.png    # 训练进度可视化图像
+│   └── dataset/                 # 数据集管理脚本
+│       ├── download.py          # 数据集下载和准备脚本
+│       └── id_to_cat.py         # ID到类别映射生成脚本
+└── deepseek_api/                # DeepSeek AI集成模块
+    └── ds_service.py            # DeepSeek API服务，用于智能植物养护问答
+
 ```
 
 ## 功能特性

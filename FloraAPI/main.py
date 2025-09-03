@@ -2,7 +2,7 @@
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-29 13:47:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-09-03 09:03:06
+LastEditTime: 2025-09-04 00:53:24
 FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
@@ -111,22 +111,15 @@ async def identify_flora(
 
 
 
-# 从环境变量获取 DeepSeek API Key
 DEEPSEEK_API_KEY = "sk-b906da3faf9f4a9bb7f36755cb599e38"
 if not DEEPSEEK_API_KEY:
     raise ValueError("Please set the DEEPSEEK_API_KEY environment variable.")
 
-# 初始化异步 OpenAI 客户端，指向 DeepSeek API
 client = AsyncOpenAI(
     api_key=DEEPSEEK_API_KEY,
     base_url="https://api.deepseek.com"  # DeepSeek API 地址[7,8](@ref)
 )
 
-# class ChatRequest(BaseModel):
-#     message: str
-#     model: Optional[str] = "deepseek-chat"  # 默认使用 deepseek-chat 模型
-#     stream: Optional[bool] = True  # 默认开启流式
-#     session_id: Optional[str] = None  # 用于多轮对话管理
 import json
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
@@ -135,8 +128,6 @@ import asyncio
 from openai import AsyncOpenAI  # 假设使用 openai 库
 
 app = FastAPI()
-# 初始化你的 AsyncOpenAI 客户端，并配置 DeepSeek 的 base_url 和 api_key
-# client = AsyncOpenAI(api_key="your-api-key", base_url="https://api.deepseek.com")
 
 class ChatRequest(BaseModel):
     message: str
@@ -163,15 +154,10 @@ async def chat_stream(request: ChatRequest):
                     content = chunk.choices[0].delta.content
                     if content is not None:
                         buffer += content  # 将内容添加到缓冲区
-                        # 只有当缓冲区达到一定大小或遇到特定条件（如句子结束）时，才发送数据
-                        # 这里简单判断：如果缓冲区长度超过一定阈值（例如10个字符）或者内容包含常见的句子分隔符，则发送
-                        # 你也可以根据自己的需求调整缓冲策略
                         if len(buffer) >= 10 or any(sep in buffer for sep in ('. ', '! ', '? ', '\n')):
-                            # 使用 json.dumps 确保内容被正确格式化为 JSON 字符串，避免破坏 SSE 格式
                             yield f"data: {json.dumps({'content': buffer})}\n\n"
                             buffer = ""  # 清空缓冲区
                         await asyncio.sleep(0.01)
-                # 循环结束后，发送缓冲区中可能剩余的内容
                 if buffer:
                     yield f"data: {json.dumps({'content': buffer})}\n\n"
                 yield "data: [DONE]\n\n"  # 发送结束信号
@@ -195,14 +181,12 @@ if frontend_ips:
     ips = [ip.strip() for ip in frontend_ips.split(",") if ip.strip()]
     allowed_origins = []
     for ip in ips:
-        # 常见 Expo/开发端口及裸 IP
         allowed_origins.extend([
             f"http://{ip}:8081",   # expo dev tools
             f"http://{ip}:19000",  # expo metro
             f"http://{ip}:19006",
             f"http://{ip}"
         ])
-    # 保留 localhost 以便本机开发调试
     allowed_origins.extend([
         "http://localhost:8081",
         "http://localhost:19000",
@@ -210,7 +194,6 @@ if frontend_ips:
         "http://localhost"
     ])
 else:
-    # 未设置时允许所有来源（与之前行为一致）
     allowed_origins = ["*"]
 
 
@@ -238,21 +221,8 @@ class DynamicCORSMiddleware(BaseHTTPMiddleware):
 
         return response
 
-
-
-
-
-
 app.add_middleware(DynamicCORSMiddleware)
 
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
 
 @app.get("/")
 def read_root():

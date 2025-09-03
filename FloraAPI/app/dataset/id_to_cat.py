@@ -2,7 +2,7 @@
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-30 14:37:41
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-08-31 08:52:25
+LastEditTime: 2025-09-04 00:52:35
 FilePath: /GardenGuideAI/FloraAPI/app/dataset/id_to_cat.py
 Description: 
 
@@ -42,12 +42,6 @@ def create_category_mapping(csv_file_path):
     return category_mapping
 
 
-'''
-description: 保存映射字典为JSON文件
-param {*} mapping_dict
-param {*} output_json_path
-return {*}
-'''
 def save_mapping_to_json(mapping_dict, output_json_path):
     """
     将映射字典保存为JSON文件
