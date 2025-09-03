@@ -1,13 +1,14 @@
 /*
  * @Date: 2025-09-03 10:11:47
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 11:56:05
+ * @LastEditTime: 2025-09-03 16:21:44
  * @FilePath: /GardenGuideAI/GardenGuideAI/network/postApi.ts
  * @Description: 
  */
 import { SystemConfig } from "@/constants/SystemConfig";
 import axios from "axios";
 import * as Network from 'expo-network';
+import useStore from "@/app/store/store";
 /**
  * @description The data required to create a post.
  */
@@ -47,27 +48,27 @@ export const createPost = async (payload: CreatePostPayload): Promise<any> => {
     // Append the image file.
     // React Native's fetch needs an object with uri, name, and type for files.
     // We extract the filename from the URI.
-        let uri = imageUri;
-        if (!uri.startsWith('file://') && !uri.startsWith('content://')) {
-            uri = `file://${uri}`;
-        }
+    let uri = imageUri;
+    if (!uri.startsWith('file://') && !uri.startsWith('content://')) {
+        uri = `file://${uri}`;
+    }
 
-        const filename = uri.split('/').pop() || `photo_${Date.now()}.jpg`;
-        const mimeType = getMimeTypeFromFilename(filename);
+    const filename = uri.split('/').pop() || `photo_${Date.now()}.jpg`;
+    const mimeType = getMimeTypeFromFilename(filename);
 
 
     formData.append('image', {
-            uri,
-            name: filename,
-            type: mimeType
-        } as any);
+        uri,
+        name: filename,
+        type: mimeType
+    } as any);
 
     const ip = await Network.getIpAddressAsync()
 
     try {
         const response = await axios.post(apiUrl, formData, {
             headers: {
-                'Content-Type':'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token}`,
                 'Origin': `http://${ip}:8081`,
                 "Connection": "keep-alive",
@@ -88,4 +89,86 @@ export const createPost = async (payload: CreatePostPayload): Promise<any> => {
     }
 }
 
+export const getAllPosts = async (): Promise<any> => {
+    const apiUrl = `${SystemConfig.GOBASEURL}/posts/allpost`;
+    const {token} = useStore()
 
+    try {
+        const response = await axios.get(apiUrl,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        );
+        console.log(response)
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching all posts:', error);
+        throw error;
+    }
+}
+
+
+export const getOnePost = async (postId: string): Promise<any> => {
+    const apiUrl = `${SystemConfig.GOBASEURL}/posts/getone`;
+    const { token } = useStore();
+
+    try {
+        const response = await axios.get(apiUrl, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            params: {
+                id: postId
+            }
+        });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching post:', error);
+        throw error;
+    }
+}
+
+export const addLike = async (postId: string): Promise<any> => {
+    const apiUrl = `${SystemConfig.GOBASEURL}/posts/like`;
+    const { token } = useStore();
+
+    try {
+        const response = await axios.post(apiUrl, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            params: {
+                id: postId
+            }
+        });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error('Error adding like:', error);
+        throw error;
+    }
+}
+
+export const getUsersPosts = async (email:string)=>{
+    const apiUrl = `${SystemConfig.GOBASEURL}/posts/userposts`;
+    const { token } = useStore();
+
+    try {
+        const response = await axios.get(apiUrl, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            params: {
+                email
+            }
+        });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching user posts:', error);
+        throw error;
+    }
+}
