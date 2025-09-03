@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-03 15:12:14
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 15:48:17
+ * @LastEditTime: 2025-09-03 16:30:52
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/like_handler.go
  * @Description:
  */
@@ -33,7 +33,7 @@ func (h *like_Handler) CreateLike(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	c.Status(http.StatusCreated)
+	c.JSON(http.StatusCreated, gin.H{"message": "Like created successfully"})
 }
 
 func (h *like_Handler) GetLikesByUser(c *gin.Context) {

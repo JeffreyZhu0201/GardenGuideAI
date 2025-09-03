@@ -2,7 +2,7 @@
 Author: JeffreyZhu JeffreyZhu0201@gmail.com
 Date: 2025-08-28 09:34:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-09-02 11:06:59
+LastEditTime: 2025-09-03 16:29:05
 FilePath: /GardenGuideAI/FloraAPI/app/model.py
 Description: 
 
@@ -20,7 +20,6 @@ import numpy as np
 import torchvision
 import math
 
-# ViT模型实现
 class PatchEmbedding(nn.Module):
     """将图像分割成小块并嵌入到向量空间"""
     def __init__(self, img_size=224, patch_size=16, in_channels=3, embed_dim=768):
@@ -125,17 +124,14 @@ class VisionTransformer(nn.Module):
         self.patch_embed = PatchEmbedding(img_size, patch_size, in_channels, embed_dim)
         n_patches = self.patch_embed.n_patches
         
-        # 分类token和位置编码
         self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
         self.pos_embed = PositionalEncoding(embed_dim, n_patches, dropout)
         
-        # Transformer编码器
         self.blocks = nn.ModuleList([
             TransformerBlock(embed_dim, num_heads, mlp_ratio, dropout)
             for _ in range(depth)
         ])
         
-        # 层归一化和分类头
         self.norm = nn.LayerNorm(embed_dim)
         self.head = nn.Sequential(
             nn.Linear(embed_dim, embed_dim // 2),
@@ -144,7 +140,6 @@ class VisionTransformer(nn.Module):
             nn.Linear(embed_dim // 2, num_classes)
         )
         
-        # 初始化权重
         self.apply(self._init_weights)
     
     def _init_weights(self, module):
