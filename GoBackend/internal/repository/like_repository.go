@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-03 15:11:30
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 15:49:42
+ * @LastEditTime: 2025-09-03 21:41:42
  * @FilePath: /GardenGuideAI/GoBackend/internal/repository/like_repository.go
  * @Description:
  */
@@ -14,7 +14,7 @@ import (
 
 type LikeRepository interface {
 	CreateLike(like *domain.Like) error
-	GetLikesByUser(email string) ([]domain.Like, error)
+	GetLikesByUser(email string) ([]domain.Post, error)
 	DeleteLike(id string) error
 }
 
@@ -30,8 +30,8 @@ func (r *mysqlLikeRepository) CreateLike(like *domain.Like) error {
 	return r.db.Create(like).Error
 }
 
-func (r *mysqlLikeRepository) GetLikesByUser(email string) ([]domain.Like, error) {
-	var likedPosts []domain.Like
+func (r *mysqlLikeRepository) GetLikesByUser(email string) ([]domain.Post, error) {
+	var likedPosts []domain.Post
 	if err := r.db.Where("email = ?", email).Find(&likedPosts).Error; err != nil {
 		return nil, err
 	}

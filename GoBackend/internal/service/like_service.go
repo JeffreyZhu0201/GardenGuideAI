@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-03 09:45:53
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 15:45:09
+ * @LastEditTime: 2025-09-03 21:41:29
  * @FilePath: /GardenGuideAI/GoBackend/internal/service/like_service.go
  * @Description: Post 服务
  */
@@ -34,7 +34,7 @@ func (s *LikeService) CreateLike(email string, postId string) error {
 	return s.likeRepo.CreateLike(like)
 }
 
-func (s *LikeService) GetLikesByUser(email string) ([]domain.Like, error) {
+func (s *LikeService) GetLikesByUser(email string) ([]domain.Post, error) {
 	likes, err := s.likeRepo.GetLikesByUser(email)
 	if err != nil {
 		return nil, err

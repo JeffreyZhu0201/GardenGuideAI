@@ -20,6 +20,7 @@ import { Link, useRouter } from 'expo-router';
 import { ThemedView } from './ThemedView';
 import { addLike } from '@/network/postApi';
 import useStore from '@/app/store/store';
+import { createLike } from '@/network/likeApi';
 
 const customStyles = {
   // 标题样式
@@ -90,6 +91,10 @@ const Card = ({ id, email, image, content, like_count }: { id: string, email: st
       const response = await addLike(id, token as string);
       if (response && response.data) {
         console.log(response)
+      }
+      const res = await createLike(email,id,token)
+      if(res){
+        console.log(res)
       }
     }
     catch (err) {

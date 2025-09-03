@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-03 10:11:47
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 20:03:43
+ * @LastEditTime: 2025-09-03 21:33:20
  * @FilePath: /GardenGuideAI/GardenGuideAI/network/postApi.ts
  * @Description: 
  */
@@ -100,21 +100,16 @@ export const getAllPosts = async (): Promise<any> => {
 }
 
 
-export const getOnePost = async (postId: string): Promise<any> => {
-    const apiUrl = `${SystemConfig.GOBASEURL}/posts/getone`;
-    const { token } = useStore();
+export const getOnePost = async (postId: string,token:string): Promise<any> => {
+    const apiUrl = `${SystemConfig.GOBASEURL}/posts/getone?id=${postId}`;
     const ip = await Network.getIpAddressAsync()
     try {
         const response = await axios.get(apiUrl, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Origin': `http://${ip}:8081`,
-            },
-            params: {
-                id: postId
             }
         });
-        console.log(response);
         return response.data;
     } catch (error) {
         console.error('Error fetching post:', error);
@@ -152,21 +147,16 @@ export const unLike = async (postId: string, token: string) => {
     return response.data;
 }
 
-export const getUsersPosts = async (email: string) => {
-    const apiUrl = `${SystemConfig.GOBASEURL}/posts/userposts`;
-    const { token } = useStore();
+export const getUsersPosts = async (email: string,token:string) => {
+    const apiUrl = `${SystemConfig.GOBASEURL}/posts/userposts?email=${email}`;
     const ip = await Network.getIpAddressAsync()
     try {
         const response = await axios.get(apiUrl, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Origin': `http://${ip}:8081`,
-            },
-            params: {
-                email
             }
         });
-        console.log(response);
         return response.data;
     } catch (error) {
         console.error('Error fetching user posts:', error);
