@@ -1,10 +1,11 @@
 /*
  * @Date: 2025-09-03 15:12:14
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 16:30:52
+ * @LastEditTime: 2025-09-03 16:41:09
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/like_handler.go
  * @Description:
  */
+
 package gin
 
 import (

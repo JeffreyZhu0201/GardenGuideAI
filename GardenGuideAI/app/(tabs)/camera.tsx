@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 14:38:52
+ * @LastEditTime: 2025-09-03 17:05:13
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/camera.tsx
  * @Description: 相机识别页面
  * 

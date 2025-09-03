@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-03 09:42:58
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 15:52:46
+ * @LastEditTime: 2025-09-03 20:02:21
  * @FilePath: /GardenGuideAI/GoBackend/internal/repository/post_repository.go
  * @Description:
  */
@@ -19,6 +19,7 @@ type PostRepository interface {
 	FindAll() ([]domain.Post, error)
 	FindOne(id uint) (*domain.Post, error)
 	LikeCountAdd(postID string) error
+	UNLikeCountAdd(postID string) error
 	GetUsersPosts(email string) ([]domain.Post, error)
 }
 
@@ -55,6 +56,10 @@ func (r *mysqlPostRepository) FindOne(id uint) (*domain.Post, error) {
 
 func (r *mysqlPostRepository) LikeCountAdd(postID string) error {
 	return r.db.Model(&domain.Post{}).Where("id = ?", postID).UpdateColumn("like_count", gorm.Expr("like_count + 1")).Error
+}
+
+func (r *mysqlPostRepository) UNLikeCountAdd(postID string) error {
+	return r.db.Model(&domain.Post{}).Where("id = ?", postID).UpdateColumn("like_count", gorm.Expr("like_count - 1")).Error
 }
 
 func (r *mysqlPostRepository) GetUsersPosts(email string) ([]domain.Post, error) {

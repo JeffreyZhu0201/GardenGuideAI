@@ -1,74 +1,174 @@
-/*
- * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+/* @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ *
  * @Date: 2025-08-31 14:22:02
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2025-09-01 21:50:13
+ * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
+ * @LastEditTime: 2025-09-03 16:41:43
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/Card.tsx
  * @Description: 
  *
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
-import React from 'react';
-import { View, Image, StyleSheet, useColorScheme } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, useColorScheme, Dimensions, TouchableOpacity } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { ThemedText } from './ThemedText';
 import { Colors } from '@/constants/Colors';
+import { SystemConfig } from '@/constants/SystemConfig';
+import { Image } from 'expo-image'
+import { Link, useRouter } from 'expo-router';
+import { ThemedView } from './ThemedView';
+import { addLike } from '@/network/postApi';
+import useStore from '@/app/store/store';
 
-interface CardProps {
-  title: string;
-  image: string;
-  content: string;
-}
+const customStyles = {
+  // 标题样式
+  heading1: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  heading2: {
+    fontSize: 14,
+    color: '#333', // 文字颜色
+    fontWeight: '300',
+    marginBottom: 15,
+  },
 
-const Card: React.FC<CardProps> = ({ title, image, content }) => {
+  // 段落样式
+  paragraph: {
+    fontSize: 14,
+    color: '#333', // 文字颜色
+    fontWeight: '300',
+    marginBottom: 15,
+  },
+  // 链接样式
+  link: {
+    color: 'purple',
+    textDecorationLine: 'underline',
+  },
+  // 粗体样式
+  strong: {
+    fontWeight: 'bold',
+    color: 'green', // 可以改变加粗文字的颜色
+  },
+};
+
+
+const { width } = Dimensions.get('window');
+
+const Card = ({ id, email, image, content, like_count }: { id: string, email: string, image: string; content: string, like_count: number }) => {
   const colorScheme = useColorScheme() ?? 'light';
+  const [clicked, setClicked] = useState(false)
+  const [delta, setDelta] = useState(0)
+  const [likes, setLikes] = useState(like_count)
+  const { token } = useStore()
 
-  // Function to get the first two lines of markdown as a preview
+  const router = useRouter();
   const getMarkdownPreview = (markdownContent: string) => {
     if (!markdownContent) return '';
-    // Split by newline, filter out empty lines, and take the first 2.
     const lines = markdownContent.trim().split('\n').filter(line => line.trim() !== '');
     return lines.slice(0, 2).join('\n');
   };
-  
+
   const contentPreview = getMarkdownPreview(content);
 
+  // 动态样式
+  const dynamicStyles = {
+    cardBackground: {
+      backgroundColor: colorScheme === 'dark' ? Colors.dark.card : Colors.light.card,
+    },
+  };
+
+  const addLikeFunc = async () => {
+    if (!token) {
+      alert('Please Login!')
+      return;
+    }
+    setClicked(!clicked)
+    setLikes((likes == like_count)?like_count+1:like_count)
+    try {
+      const response = await addLike(id, token as string);
+      if (response && response.data) {
+        console.log(response)
+      }
+    }
+    catch (err) {
+      console.error('Error fetching posts:', err);
+    }
+  }
+
   return (
-    <View style={[styles.card, { backgroundColor: Colors[colorScheme].card, shadowColor: Colors[colorScheme].text }]}>
-      <ThemedText type="subtitle">{title}</ThemedText>
-      <Image source={{ uri: image }} style={styles.image} />
-      <View style={styles.contentContainer}>
-        <Markdown style={{ body: { color: Colors[colorScheme].text } }}>{contentPreview}</Markdown>
+    <Link href={{
+          pathname: '/DetailPage/[content]',
+          params: { content: content }
+        }}>
+      <View style={styles.container}>
+        <View style={[styles.contentWrapper, dynamicStyles.cardBackground]}>
+          <Image
+            source={SystemConfig.IMAGESOURCEL + image}
+            style={styles.image}
+            accessibilityLabel="Card content image"
+          />
+          <ThemedText style={styles.contentContainer}>
+            <Markdown style={customStyles as any}>{contentPreview}</Markdown>
+          </ThemedText>
+          <ThemedView>
+            <ThemedView style={{ flex: 1, marginTop: 32 }}>
+              <Image
+                source={require("@/assets/icons/right.png")}
+                style={[styles.arrowIcon, {}]}
+                accessibilityLabel="Navigate to details"
+              />
+            </ThemedView>
+            <TouchableOpacity onPress={() => { addLikeFunc() }}>
+              <ThemedView style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 6 }}>
+                {
+                  (clicked) ? (<Image source={require("@/assets/icons/heart.png")} style={{ width: 16, height: 16 }}></Image>) : (<Image source={require("@/assets/icons/heart (1).png")} style={{ width: 16, height: 16 }}></Image>)
+                }
+                <ThemedText>
+                  {likes}
+                </ThemedText>
+              </ThemedView>
+            </TouchableOpacity>
+          </ThemedView>
+        </View>
       </View>
-    </View>
+    </Link>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    width: '95%',
-    borderRadius: 8,
-    marginBottom: 15,
-    padding: 15,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  container: {
+    margin: 6,
+    width: '100%',
+    alignItems: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  contentWrapper: {
+    flexDirection: 'row',
+    borderRadius: 12,
+    padding: 10,
+    width: width * 0.95, // 使用屏幕宽度百分比
   },
   image: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 10,
+    width: 100,
+    height: 100,
+    borderTopLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    resizeMode: 'cover',
   },
   contentContainer: {
-    // Container for markdown content
+    flex: 1,
+    marginTop:6,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    lineHeight: 20,
+    padding: 12,
+  },
+  arrowIcon: {
+    width: 24,
+    height: 24,
   },
 });
 

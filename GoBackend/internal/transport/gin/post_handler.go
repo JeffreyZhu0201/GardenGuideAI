@@ -1,13 +1,14 @@
 /*
  * @Date: 2025-09-03 09:22:47
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 15:53:04
+ * @LastEditTime: 2025-09-03 20:01:30
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/post_handler.go
  * @Description:
  */
 package gin
 
 import (
+	"log"
 	"net/http"
 
 	"strconv"
@@ -83,7 +84,18 @@ func (h *PostHandler) GetOnePost(c *gin.Context) {
 
 func (h *PostHandler) LikeCountAdd(c *gin.Context) {
 	postID := c.Query("id")
+	log.Default().Println(postID)
 	if err := h.postService.LikePost(c, postID); err != nil {
+		c.JSON(http.StatusInternalServerError, domain.NewErrorResponse("500", "Failed to like post: "+err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, domain.NewSuccessResponse(nil))
+}
+
+func (h *PostHandler) UNLikeCountAdd(c *gin.Context) {
+	postID := c.Query("id")
+	log.Default().Println(postID)
+	if err := h.postService.UNLikePost(c, postID); err != nil {
 		c.JSON(http.StatusInternalServerError, domain.NewErrorResponse("500", "Failed to like post: "+err.Error()))
 		return
 	}

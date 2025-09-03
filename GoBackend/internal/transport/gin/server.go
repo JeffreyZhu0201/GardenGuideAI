@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:20
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 15:53:31
+ * @LastEditTime: 2025-09-03 20:03:04
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/server.go
  * @Description:
  *
@@ -136,12 +136,14 @@ func (s *Server) registerAuthRoutes() {
 		}
 
 		postGroup := api.Group("/posts")
+		postGroup.GET("/allpost", postHandler.GetAllPost)
+		postGroup.GET("/getone", postHandler.GetOnePost)
+		postGroup.POST("/like", postHandler.LikeCountAdd)     // 未做jwt，不安全
+		postGroup.POST("/unlike", postHandler.UNLikeCountAdd) // 未做jwt，不安全
 		postGroup.Use(AuthMiddleware(s.jwtService))
 		{
 			postGroup.POST("", postHandler.CreatePost)
-			postGroup.GET("/allpost", postHandler.GetAllPost)
-			postGroup.GET("/getone", postHandler.GetOnePost)
-			postGroup.POST("/like", postHandler.LikeCountAdd)
+
 			postGroup.GET("/userposts", postHandler.GetUsersPosts)
 		}
 

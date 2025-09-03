@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-03 10:11:47
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 16:21:44
+ * @LastEditTime: 2025-09-03 20:03:43
  * @FilePath: /GardenGuideAI/GardenGuideAI/network/postApi.ts
  * @Description: 
  */
@@ -9,6 +9,7 @@ import { SystemConfig } from "@/constants/SystemConfig";
 import axios from "axios";
 import * as Network from 'expo-network';
 import useStore from "@/app/store/store";
+import { buildURL } from "@/utils/utils";
 /**
  * @description The data required to create a post.
  */
@@ -65,59 +66,49 @@ export const createPost = async (payload: CreatePostPayload): Promise<any> => {
 
     const ip = await Network.getIpAddressAsync()
 
-    try {
-        const response = await axios.post(apiUrl, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${token}`,
-                'Origin': `http://${ip}:8081`,
-                "Connection": "keep-alive",
-                // "Accept": "application/json",
-                // "Accept-Encoding": "gzip, deflate, br",
-                // 'Content-Type' is not set manually.
-                // fetch will automatically set it to 'multipart/form-data'
-                // with the correct boundary when the body is a FormData object.
-            }
-        });
-        console.log(response)
-        // If successful, parse the JSON response and return it.
-        return response.data;
-    } catch (error) {
-        console.error('Error creating post:', error);
-        // Re-throw the error to be handled by the calling function.
-        throw error;
-    }
+    const response = await axios.post(apiUrl, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
+            'Origin': `http://${ip}:8081`,
+            "Connection": "keep-alive",
+            // "Accept": "application/json",
+            // "Accept-Encoding": "gzip, deflate, br",
+            // 'Content-Type' is not set manually.
+            // fetch will automatically set it to 'multipart/form-data'
+            // with the correct boundary when the body is a FormData object.
+        }
+    });
+    console.log(response)
+    // If successful, parse the JSON response and return it.
+    return response.data;
 }
 
 export const getAllPosts = async (): Promise<any> => {
     const apiUrl = `${SystemConfig.GOBASEURL}/posts/allpost`;
-    const {token} = useStore()
 
-    try {
-        const response = await axios.get(apiUrl,
-            {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            }
-        );
-        console.log(response)
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching all posts:', error);
-        throw error;
+    const ip = await Network.getIpAddressAsync()
+
+    const response = await axios.get(apiUrl, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'Origin': `http://${ip}:8081`,
+        }
     }
+    );
+    return response.data;
 }
 
 
 export const getOnePost = async (postId: string): Promise<any> => {
     const apiUrl = `${SystemConfig.GOBASEURL}/posts/getone`;
     const { token } = useStore();
-
+    const ip = await Network.getIpAddressAsync()
     try {
         const response = await axios.get(apiUrl, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Origin': `http://${ip}:8081`,
             },
             params: {
                 id: postId
@@ -131,35 +122,45 @@ export const getOnePost = async (postId: string): Promise<any> => {
     }
 }
 
-export const addLike = async (postId: string): Promise<any> => {
-    const apiUrl = `${SystemConfig.GOBASEURL}/posts/like`;
-    const { token } = useStore();
-
-    try {
-        const response = await axios.post(apiUrl, {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-            params: {
-                id: postId
-            }
-        });
-        console.log(response);
-        return response.data;
-    } catch (error) {
-        console.error('Error adding like:', error);
-        throw error;
-    }
+export const addLike = async (postId: string, token: string) => {
+    // const apiUrl = `${SystemConfig.GOBASEURL}/posts/like?id=${postId}`;
+    const apiUrl = buildURL(`${SystemConfig.GOBASEURL}`,'/posts/like',{},{id:postId})
+    const ip = await Network.getIpAddressAsync()
+    console.log(apiUrl)
+    const response = await axios.post(apiUrl, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Origin': `http://${ip}:8081`,
+        }
+    });
+    console.log(response);
+    return response.data;
 }
 
-export const getUsersPosts = async (email:string)=>{
+export const unLike = async (postId: string, token: string) => {
+    // const apiUrl = `${SystemConfig.GOBASEURL}/posts/like?id=${postId}`;
+    const apiUrl = buildURL(`${SystemConfig.GOBASEURL}`,'/posts/unlike',{},{id:postId})
+    const ip = await Network.getIpAddressAsync()
+    console.log(apiUrl)
+    const response = await axios.post(apiUrl, {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Origin': `http://${ip}:8081`,
+        }
+    });
+    console.log(response);
+    return response.data;
+}
+
+export const getUsersPosts = async (email: string) => {
     const apiUrl = `${SystemConfig.GOBASEURL}/posts/userposts`;
     const { token } = useStore();
-
+    const ip = await Network.getIpAddressAsync()
     try {
         const response = await axios.get(apiUrl, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'Origin': `http://${ip}:8081`,
             },
             params: {
                 email

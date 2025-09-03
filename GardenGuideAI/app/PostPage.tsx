@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-02 20:17:01
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 14:37:51
+ * @LastEditTime: 2025-09-03 16:54:28
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/PostPage.tsx
  * @Description: 帖子页面
  */
@@ -37,7 +37,7 @@ export default function PostScreen() {
         useCallback(() => {
             setHeaderTitle('Post');
         }, [setHeaderTitle])
-    );
+        );
 
     useEffect(() => {
         // 当依赖项变化时，重置状态并开始识别
@@ -217,8 +217,6 @@ export default function PostScreen() {
             <TouchableOpacity style={styles.PostBotton} onPress={() => { uploadPost() }}>
                 <Image source={require('@/assets/icons/add.png')} style={{ width: 64, height: 64 }} />
             </TouchableOpacity>
-
-
         </ScrollView>
     );
 }
