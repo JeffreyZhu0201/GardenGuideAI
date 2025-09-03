@@ -43,3 +43,6 @@ yarn-error.*
 
 app-example
 FloraAPI/__pycache__/main.cpython-313.pyc
+
+
+GoBackend/uploads/

@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 20:32:50
+ * @LastEditTime: 2025-09-03 14:38:52
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/camera.tsx
  * @Description: 相机识别页面
  * 
@@ -26,7 +26,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 export type RootStackParamList = {
 	"CameraPage": undefined;
 	"PostPage": undefined;
-
 };
 
 export default function CameraPage() {
@@ -101,7 +100,7 @@ export default function CameraPage() {
 	return (
 		<View style={styles.container}>
 
-			<CameraView key={cameraKey} style={styles.camera} facing={facing as CameraType} ref={ref}></CameraView> {/*onCameraReady={cameraRef.current?.resumePreview} */}
+			<CameraView key={cameraKey} style={styles.camera} facing={facing} ref={ref}></CameraView> {/*onCameraReady={cameraRef.current?.resumePreview} */}
 			<View style={styles.buttonContainer}>
 				<TouchableOpacity style={styles.button} onPress={Identify}>
 					<Image source={require('@/assets/icons/photo-capture.png')} style={styles.cameraIcon} />

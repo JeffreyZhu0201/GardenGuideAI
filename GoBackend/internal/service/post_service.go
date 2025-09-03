@@ -1,13 +1,14 @@
 /*
  * @Date: 2025-09-03 09:45:53
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 09:46:18
+ * @LastEditTime: 2025-09-03 14:43:52
  * @FilePath: /GardenGuideAI/GoBackend/internal/service/post_service.go
  * @Description: Post 服务
  */
 package service
 
 import (
+	"log"
 	"mime/multipart"
 	"os"
 	"path/filepath"
@@ -27,9 +28,18 @@ func NewPostService(postRepo repository.PostRepository) *PostService {
 	return &PostService{postRepo: postRepo}
 }
 
+func (s *PostService) GetAllPosts(c *gin.Context) ([]domain.Post, error) {
+	Posts, err := s.postRepo.FindAll()
+	return Posts, err
+}
+
 // CreatePost handles the logic for creating a new post.
 func (s *PostService) CreatePost(c *gin.Context, email, content string, fileHeader *multipart.FileHeader) (*domain.Post, error) {
 	var savedImagePath string
+	log.Default().Println("Creating post for user:", email)
+	log.Default().Println("Post content:", content)
+	// log.Default().Println("Received file:", fileHeader)
+
 	if fileHeader != nil {
 		// ensure upload directory exists
 		uploadDir := filepath.Join("uploads", "posts")

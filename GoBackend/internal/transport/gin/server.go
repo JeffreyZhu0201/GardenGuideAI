@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:20
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 10:09:58
+ * @LastEditTime: 2025-09-03 14:45:35
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/server.go
  * @Description:
  *
@@ -12,7 +12,6 @@
 package gin
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/JeffreyZhu0201/GardenGuideAI/GoBackend/internal/repository"
@@ -54,7 +53,6 @@ func NewServer(opts ...Option) *Server {
 
 	s.registerAuthRoutes()
 
-	s.registerPostRoutes()
 	return s
 }
 
@@ -118,6 +116,10 @@ func (s *Server) registerAuthRoutes() {
 	authService := service.NewAuthService(authRepo, s.jwtService)
 	authHandler := NewAuthHandler(authService)
 
+	postRepo := repository.NewMysqlPostRepository(s.db)
+	postService := service.NewPostService(postRepo)
+	postHandler := NewPostHandler(postService)
+
 	api := s.router.Group("/api/v1")
 	{
 		api.POST("/register", authHandler.Register)
@@ -129,22 +131,12 @@ func (s *Server) registerAuthRoutes() {
 		{
 			authGroup.POST("/logout", authHandler.Logout)
 		}
-	}
-}
 
-func (s *Server) registerPostRoutes() {
-	// 初始化 Post 服务和处理器
-	postRepo := repository.NewMysqlPostRepository(s.db)
-	postService := service.NewPostService(postRepo)
-	postHandler := NewPostHandler(postService)
-
-	// 注册 Post 路由
-	api := s.router.Group("/api/v1")
-	{
 		postGroup := api.Group("/posts")
-		postGroup.Use(AuthMiddleware(s.jwtService))
+		// postGroup.Use(AuthMiddleware(s.jwtService))
 		{
-			postGroup.POST("/", postHandler.CreatePost)
+			postGroup.POST("", postHandler.CreatePost)
+			postGroup.GET("/allpost", postHandler.GetAllPost)
 		}
 	}
 }
@@ -164,23 +156,18 @@ func (s *Server) Run(addr string) error {
  */
 func corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// If an Origin header exists, echo it back and allow credentials.
-		// If no Origin is present, fall back to wildcard for non-browser clients.
-		origin := c.Request.Header.Get("Origin")
-		if origin == "" {
-			c.Header("Access-Control-Allow-Origin", "*")
-		} else {
-			c.Header("Access-Control-Allow-Origin", origin)
-			c.Header("Access-Control-Allow-Credentials", "true")
-		}
+		// Dynamically allow the origin from the request header
+		c.Header("Access-Control-Allow-Origin", c.Request.Header.Get("Origin"))
+		c.Header("Access-Control-Allow-Credentials", "true")
+		// Specify allowed headers. It's crucial to include any custom headers
+		// your client sends, like 'Authorization'.
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		// Specify allowed methods
+		c.Header("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
 
-		log.Default().Println("CORS Origin:", origin)
-
-		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Header("Access-Control-Allow-Headers", "Origin, Content-Type, Authorization")
-
+		// Handle the preflight 'OPTIONS' request
 		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
+			c.AbortWithStatus(204) // 204 No Content
 			return
 		}
 

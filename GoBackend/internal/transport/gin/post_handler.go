@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-03 09:22:47
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 10:07:31
+ * @LastEditTime: 2025-09-03 14:45:01
  * @FilePath: /GardenGuideAI/GoBackend/internal/transport/gin/post_handler.go
  * @Description:
  */
@@ -50,4 +50,13 @@ func (h *PostHandler) CreatePost(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, domain.NewSuccessResponse(post))
+}
+
+func (h *PostHandler) GetAllPost(c *gin.Context) {
+	posts, err := h.postService.GetAllPosts(c)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, domain.NewErrorResponse("500", "Failed to retrieve posts: "+err.Error()))
+		return
+	}
+	c.JSON(http.StatusOK, domain.NewSuccessResponse(posts))
 }

@@ -1,43 +1,37 @@
 /*
  * @Date: 2025-09-02 20:17:01
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 09:40:39
+ * @LastEditTime: 2025-09-03 14:37:51
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/PostPage.tsx
  * @Description: 帖子页面
  */
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ScrollView, Alert, StyleSheet, SafeAreaView } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { ScrollView, Alert, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import useStore from '@/app/store/store'; // 请根据你的实际路径修改
 import { identifyPlant } from '@/network/identifyApi'; // 请根据你的实际路径修改
 import EventSource from 'react-native-sse'; // 引入 react-native-sse
 import { SystemConfig } from '@/constants/SystemConfig';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-
-import { useWindowDimensions } from 'react-native';
-import RenderHtml from 'react-native-render-html';
-import { Background } from '@react-navigation/elements';
+import { Image } from 'expo-image';
 import Markdown, { MarkdownIt } from 'react-native-markdown-display';
+
+import { createPost } from '@/network/postApi';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from './(tabs)/camera';
 
 const markdownItInstance = MarkdownIt({ typographer: true }).set({ breaks: true }); // 启用 breaks 选项
 
 export default function PostScreen() {
-    const { setHeaderTitle, fileUri, token } = useStore();
+    const { setHeaderTitle, fileUri, token, userInfo } = useStore();
     const [identifyResult, setIdentifyResult] = useState<string>("");
     const [deepSeekResult, setDeepSeekResult] = useState<string>(""); // 初始化为空字符串
     const eventSourceRef = useRef<EventSource | null>(null); // 用于保存 EventSource 实例
 
-
     const [finishStatus, setFinishStatus] = useState<boolean>(false);
 
-    const source: { html: string } | undefined = finishStatus
-        ? {
-            html: deepSeekResult,
-        }
-        : undefined;
-
-    const { width } = useWindowDimensions();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'PostPage'>>();
 
     useFocusEffect(
         useCallback(() => {
@@ -48,6 +42,7 @@ export default function PostScreen() {
     useEffect(() => {
         // 当依赖项变化时，重置状态并开始识别
         if (fileUri && token) {
+            setFinishStatus(false);
             setIdentifyResult("");
             setDeepSeekResult(""); // 每次新的识别开始时清空之前的DeepSeek结果
             Identify();
@@ -61,9 +56,6 @@ export default function PostScreen() {
             }
         };
     }, [fileUri, token]);
-
-
-
 
     async function Identify() {
         if (!fileUri || !token) {
@@ -96,7 +88,7 @@ export default function PostScreen() {
 
     function removeMarkdownCodeBlockTags(input: string): string {
         // 匹配开头的 ```markdown\n 和结尾的 ```\n
-       return input.replace('```markdown\n', '').replace('\n```', '');
+        return input.replace('```markdown\n', '').replace('\n```', '');
     }
 
 
@@ -172,36 +164,61 @@ export default function PostScreen() {
         }
     }
 
+    const uploadPost = async () => {
+        const email = userInfo?.email || "";
+        const content = deepSeekResult;
+        const imageUri = fileUri || "";
+        const Token = token || "";
+
+        try {
+            const response = await createPost({
+                email, content, imageUri, token: Token
+            });
+            console.log(response)
+            if (response.code == 200) {
+                console.log("Post uploaded successfully:", response.data);
+                alert("帖子上传成功！");
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                navigation.goBack()
+            } else {
+                console.error("Failed to upload post:", response.message);
+            }
+        } catch (error) {
+            console.error('Error uploading post:', error);
+            alert("无法上传帖子，请检查网络和后端服务。");
+        }
+
+    }
+
+
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <ThemedText style={styles.resultText}>
+            <ThemedView style={{ marginBottom: 96, borderRadius: 8, padding: 12 }}>
+                <ThemedText style={styles.resultText}>
+                    {
+                        (identifyResult) ? (`识别结果: ${identifyResult}`) : "正在识别中..."
+                    }
+                </ThemedText>
                 {
-                    (identifyResult) ? (`识别结果: ${identifyResult}`) : "正在识别中..."
-                }
-            </ThemedText>
 
-            {
-                (finishStatus && deepSeekResult.length > 0)
-                    ? (<ThemedView style={{ padding: 12, backgroundColor: '#ffffffff', borderRadius: 8 }}>
-                        {/* <RenderHtml
-                            contentWidth={width}
-                            source={source as any}
-                        // Optional: Add tagsStyles, classesStyles, or customRenderers here
-                        /> */}
-                        <Markdown markdownit={markdownItInstance}>
-                            {deepSeekResult}
-                        </Markdown>
-                        <ThemedText>百科生成完成...</ThemedText>
-                    </ThemedView>)
-                    : (<ThemedView style={{ backgroundColor: '#ffffffff', padding: 12, borderRadius: 8 }}>
-                        <ThemedText style={[{ fontSize: 16, fontWeight: '600', paddingVertical: 4, color: '#666' }]}>正在生成回答...</ThemedText>
+                    (<ThemedView style={{ backgroundColor: '#ffffffff', padding: 12, borderRadius: 8, width: '100%' }}>
+                        <ThemedText style={[{ fontSize: 16, fontWeight: '600', paddingVertical: 4, color: '#666' }]}>{(finishStatus) ? ("回答生成完毕...") : ("生成AI回答中...")}</ThemedText>
                         {(deepSeekResult) ? (<ThemedText style={styles.streamingText}>
                             <Markdown markdownit={markdownItInstance}>
                                 {deepSeekResult.replace(/\\n/g, '\n')}
                             </Markdown>
                         </ThemedText>) : null}
                     </ThemedView>)
-            }
+                }
+            </ThemedView>
+
+            {/* 帖子发布按钮 */}
+            <TouchableOpacity style={styles.PostBotton} onPress={() => { uploadPost() }}>
+                <Image source={require('@/assets/icons/add.png')} style={{ width: 64, height: 64 }} />
+            </TouchableOpacity>
+
+
         </ScrollView>
     );
 }
@@ -209,29 +226,40 @@ export default function PostScreen() {
 
 const styles = StyleSheet.create({
     container: {
+        flexGrow: 1,
         padding: 10,
-        gap: 16,
+        paddingVertical: 16,
+        gap: 24,
     },
     resultText: {
         fontSize: 24,
         paddingVertical: 16,
+        paddingHorizontal: 8,
         fontWeight: 'bold',
     },
     streamingText: {
         paddingVertical: 8,
-        paddingHorizontal: 12,
+        width: '100%',
         fontSize: 12,
-        lineHeight: 10,
-        color: '#999999ff', 
+        lineHeight: 16,
+        color: '#999999ff',
     },
     deepSeekContainer: {
         padding: 8,
-        backgroundColor: '#f0f0f0', 
+        backgroundColor: '#f0f0f0',
         borderRadius: 8,
     },
     descriptionText: {
         fontSize: 16,
         lineHeight: 24,
-        color: '#333', 
+        color: '#333',
+    },
+    PostBotton: {
+        position: 'absolute',
+        bottom: 12,
+        right: 12,
+        padding: 16,
+        backgroundColor: 'transparent',
+        alignItems: 'center'
     }
 });
