@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-02 20:17:01
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 16:54:28
+ * @LastEditTime: 2025-09-04 00:42:12
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/PostPage.tsx
  * @Description: 帖子页面
  */
@@ -22,6 +22,22 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from './(tabs)/camera';
 
 const markdownItInstance = MarkdownIt({ typographer: true }).set({ breaks: true }); // 启用 breaks 选项
+
+
+
+const customStyles = {
+  // 标题样式
+  heading1: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  // 粗体样式
+  strong: {
+    fontWeight: 'bold',
+    color: 'green', // 可以改变加粗文字的颜色
+  },
+};
+
 
 export default function PostScreen() {
     const { setHeaderTitle, fileUri, token, userInfo } = useStore();
@@ -205,7 +221,7 @@ export default function PostScreen() {
                     (<ThemedView style={{ backgroundColor: '#ffffffff', padding: 12, borderRadius: 8, width: '100%' }}>
                         <ThemedText style={[{ fontSize: 16, fontWeight: '600', paddingVertical: 4, color: '#666' }]}>{(finishStatus) ? ("回答生成完毕...") : ("生成AI回答中...")}</ThemedText>
                         {(deepSeekResult) ? (<ThemedText style={styles.streamingText}>
-                            <Markdown markdownit={markdownItInstance}>
+                            <Markdown markdownit={markdownItInstance} style={customStyles as any}>
                                 {deepSeekResult.replace(/\\n/g, '\n')}
                             </Markdown>
                         </ThemedText>) : null}

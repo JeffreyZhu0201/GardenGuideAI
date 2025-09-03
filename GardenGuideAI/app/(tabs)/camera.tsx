@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 17:05:13
+ * @LastEditTime: 2025-09-04 00:37:16
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/camera.tsx
  * @Description: 相机识别页面
  * 
@@ -21,6 +21,7 @@ import { Image } from "expo-image"
 import { ThemedView } from '@/components/ThemedView';
 import { navigate } from 'expo-router/build/global-state/routing';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ThemedText } from '@/components/ThemedText';
 
 
 export type RootStackParamList = {
@@ -99,7 +100,11 @@ export default function CameraPage() {
 
 	return (
 		<View style={styles.container}>
-
+			<View style={{ justifyContent: 'center',flex:1, alignItems: 'center',maxHeight:80 }}>
+				<ThemedText style={{ color: '#ffffff', fontSize: 32, textAlign: 'center',fontWeight:'600' }}>
+					「Scan it now」
+				</ThemedText>
+			</View>
 			<CameraView key={cameraKey} style={styles.camera} facing={facing} ref={ref}></CameraView> {/*onCameraReady={cameraRef.current?.resumePreview} */}
 			<View style={styles.buttonContainer}>
 				<TouchableOpacity style={styles.button} onPress={Identify}>
@@ -117,11 +122,10 @@ const styles = StyleSheet.create({
 	container: {
 		margin: 0,
 		display: 'flex',
-		flexDirection: 'column',
-		justifyContent: "space-between",
 		alignItems: 'center',
+		justifyContent:'space-between',
 		flex: 1,
-		backgroundColor: '#f0f0f0', // 推荐颜色
+		backgroundColor: '#000000ff', // 推荐颜色
 	},
 	garantedScreen: {
 		flex: 1,
@@ -142,9 +146,9 @@ const styles = StyleSheet.create({
 		backgroundColor: '#c18383ff',
 	},
 	camera: {
-		marginTop: 64,
+		marginTop: 0,
 		borderColor: 'white',
-		borderWidth: 8,
+		borderWidth: 6,
 		width: 340,
 		height: 400,
 		maxHeight: 400,
@@ -161,8 +165,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	button: {
-		justifyContent: 'flex-end',
-		marginBottom: 48,
+		marginBottom: 30,
 	},
 	cameraIcon: {
 		width: 64,

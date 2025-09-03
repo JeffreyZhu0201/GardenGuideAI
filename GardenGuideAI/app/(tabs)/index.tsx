@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 22:08:28
+ * @LastEditTime: 2025-09-04 00:38:48
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/index.tsx
  * @Description: 首页
  *
@@ -33,7 +33,7 @@ export default function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      setHeaderTitle('Community');
+      setHeaderTitle('GardenGuideAI');
 
       const fetchPosts = async () => {
         try {
