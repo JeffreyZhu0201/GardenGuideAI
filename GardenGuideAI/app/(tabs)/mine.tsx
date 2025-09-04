@@ -1,7 +1,7 @@
 /*
  * @Date: 2025-09-01 21:35:23
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-04 17:37:04
+ * @LastEditTime: 2025-09-04 18:03:56
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/mine.tsx
  * @Description: 
  */

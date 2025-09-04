@@ -5,8 +5,6 @@
 		}
 	],
 	"settings": {
-		"trae.tab.enableRename": false,
-		"trae.tab.enableAutoImport": false,
 		"cSpell.words": [
 			"blurhash",
 			"Pressable"

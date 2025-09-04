@@ -1,6 +1,6 @@
 {
     "python.analysis.autoImportCompletions": true,
-    "editor.hideCursorInOverviewRuler": false,
+    "editor.hideCursorInOverviewRuler": true,
     "editor.cursorSmoothCaretAnimation": "on",
     "editor.cursorStyle": "block"
 }

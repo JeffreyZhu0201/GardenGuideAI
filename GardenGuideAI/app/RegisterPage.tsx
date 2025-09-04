@@ -2,7 +2,7 @@
 * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 * @Date: 2025-09-01 01:27:08
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-04 17:58:01
+ * @LastEditTime: 2025-09-04 18:08:49
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/RegisterPage.tsx
 * @Description: 登陆页面
  * 
@@ -13,13 +13,12 @@ import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { RootStackParamList } from "./(tabs)/mine"
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from "@react-navigation/native";
-import useStore from './store/store';
 import { Register } from "../network/userApi"
 import { ThemedText } from '@/components/ThemedText';
 
 
 export default function RegiterPage() {
-  const { userInfo, setUserInfo, token, setToken } = useStore()
+  // const { userInfo, setUserInfo, token, setToken } = useStore()
 
   const [currentUserEmail, setCurrentUserEmail] = useState<string>("")
   const [currentUserPassword, setCurrentUserPassword] = useState<string>("")
@@ -32,7 +31,7 @@ export default function RegiterPage() {
     console.log('Logging in with:', Email, Password);
     const response = await Register(Email, Password)
 
-    if (response.code == 200 && response.data) {
+    if (response.code === 200 && response.data) {
       console.log(response.data.token);
       alert("Registered in successfully")
       await new Promise(resolve => setTimeout(resolve, 1000));

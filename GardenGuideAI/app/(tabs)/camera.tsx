@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-04 17:22:51
+ * @LastEditTime: 2025-09-04 18:11:52
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/camera.tsx
  * @Description: 相机识别页面
  * 
@@ -10,7 +10,7 @@
  */
 
 
-import { CameraView, CameraType, useCameraPermissions, CameraCapturedPicture, CameraPictureOptions } from 'expo-camera';
+import { CameraView, useCameraPermissions, CameraCapturedPicture, CameraPictureOptions } from 'expo-camera';
 import { useRef, useState, useCallback } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -18,7 +18,6 @@ import { base64ToFile } from '@/utils/utils'
 import useStore from '@/app/store/store';
 import { Image } from "expo-image"
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ThemedText } from '@/components/ThemedText';
 
 export type RootStackParamList = {
 	"CameraPage": undefined;
@@ -26,6 +25,7 @@ export type RootStackParamList = {
 };
 
 export default function CameraPage() {
+	// const 
 	const [permission, requestPermission] = useCameraPermissions();
 
 	const { token, setHeaderTitle, setFileUri } = useStore();

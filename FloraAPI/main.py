@@ -2,7 +2,7 @@
 Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
 Date: 2025-08-29 13:47:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-09-04 00:53:24
+LastEditTime: 2025-09-04 18:31:21
 FilePath: /GardenGuideAI/FloraAPI/main.py
 Description: 
 
@@ -11,29 +11,22 @@ Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
 
 
 from PIL import Image
-from fastapi import APIRouter,FastAPI, File, UploadFile, HTTPException, Header, Request, Depends
-from fastapi.responses import JSONResponse, StreamingResponse
-from fastapi.middleware.cors import CORSMiddleware
-from typing import Optional
+from fastapi import APIRouter,FastAPI, File, UploadFile, HTTPException, Depends
+from fastapi.responses import StreamingResponse
 import io
 import os
 import numpy as np
-import jwt
 from openai import AsyncOpenAI
-from deepseek_api.ds_service import get_deepseek_answer, get_deepseek_answer_stream
-from app.predict import predict
 from app.export import IdentifyFlora
 from app.train import Config
 from utils import read_json_file,verify_token
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
-from fastapi import FastAPI, Request, HTTPException, status
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi import FastAPI,  HTTPException
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
-import httpx
 import asyncio
 import json
-import os
 
 app = FastAPI(title="FloraAPI", description="植物识别API")
 v1 = APIRouter(prefix="/api/v1")  # 新增版本路由
@@ -78,39 +71,6 @@ async def identify_flora(
     return response
 
 
-# @v1.post("/deepseek")
-# async def getDeepSeekAnswer(
-#     request: Request,
-#     token_payload: dict = Depends(verify_token)
-# ):
-#     """
-#         DeepSeek问答接口
-#         - question: 用户提问的问题
-#         - Authorization: Bearer <token>
-#     """
-#     question = request.query_params.get("question")
-#     if not question:
-#         raise HTTPException(status_code=400, detail="Question parameter is required")
-#     answer = get_deepseek_answer(question)
-#     return {
-#         "code":200,
-#         "message":"success",
-#         "answer": answer
-#     }
-
-# @v1.post("/deepseek")
-# async def deepseek_endpoint(question: str, token_payload: dict = Depends(verify_token)):
-#     """
-#     处理对 DeepSeek 的流式请求。
-#     """
-#     # 在这里可以添加您的 token 验证逻辑
-#     # verify_token(authorization)
-    
-#     # 返回一个流式响应
-#     return StreamingResponse(get_deepseek_answer_stream(f"请介绍一下植物：{question}"), media_type="text/plain; charset=utf-8")
-
-
-
 DEEPSEEK_API_KEY = "sk-b906da3faf9f4a9bb7f36755cb599e38"
 if not DEEPSEEK_API_KEY:
     raise ValueError("Please set the DEEPSEEK_API_KEY environment variable.")
@@ -120,12 +80,6 @@ client = AsyncOpenAI(
     base_url="https://api.deepseek.com"  # DeepSeek API 地址[7,8](@ref)
 )
 
-import json
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
-import asyncio
-from openai import AsyncOpenAI  # 假设使用 openai 库
 
 app = FastAPI()
 
