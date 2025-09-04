@@ -65,7 +65,7 @@ export const identifyPlant = async (
             type: mimeType
         } as any);
 
-        const base = (SystemConfig.IDENTIFYBASETURL || '').replace(/\/$/, '');
+        const base = (SystemConfig.IDENTIFY_BASE_URL || '').replace(/\/$/, '');
         const apiPath = (IdentifyConfig.IDENTIFY_API || '').replace(/^\//, '');
         const URL = `${base}/${apiPath}`;
 

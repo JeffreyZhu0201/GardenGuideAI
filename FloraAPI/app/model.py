@@ -2,7 +2,7 @@
 Author: JeffreyZhu JeffreyZhu0201@gmail.com
 Date: 2025-08-28 09:34:13
 LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
-LastEditTime: 2025-09-03 16:29:05
+LastEditTime: 2025-09-04 15:40:41
 FilePath: /GardenGuideAI/FloraAPI/app/model.py
 Description: 
 
@@ -22,7 +22,7 @@ import math
 
 class PatchEmbedding(nn.Module):
     """将图像分割成小块并嵌入到向量空间"""
-    def __init__(self, img_size=224, patch_size=16, in_channels=3, embed_dim=768):
+    def __init__(self, img_size=224, patch_size=16, in_channels=3, embed_dim=768) -> None:  
         super().__init__()
         self.img_size = img_size
         self.patch_size = patch_size
@@ -43,19 +43,19 @@ class PatchEmbedding(nn.Module):
 
 class PositionalEncoding(nn.Module):
     """位置编码"""
-    def __init__(self, embed_dim, n_patches, dropout=0.1):
+    def __init__(self, embed_dim, n_patches, dropout=0.1) -> None:
         super().__init__()
         self.pos_embed = nn.Parameter(torch.zeros(1, n_patches + 1, embed_dim))
         self.dropout = nn.Dropout(dropout)
         nn.init.trunc_normal_(self.pos_embed, std=0.02)
     
-    def forward(self, x):
+    def forward(self, x):# -> Any:
         x = x + self.pos_embed[:, :x.size(1)]
         return self.dropout(x)
 
 class MultiHeadAttention(nn.Module):
     """多头注意力机制"""
-    def __init__(self, embed_dim, num_heads, dropout=0.1):
+    def __init__(self, embed_dim, num_heads, dropout=0.1) -> None:
         super().__init__()
         assert embed_dim % num_heads == 0, "embed_dim必须能被num_heads整除"
         
@@ -131,6 +131,7 @@ class VisionTransformer(nn.Module):
             TransformerBlock(embed_dim, num_heads, mlp_ratio, dropout)
             for _ in range(depth)
         ])
+        
         
         self.norm = nn.LayerNorm(embed_dim)
         self.head = nn.Sequential(

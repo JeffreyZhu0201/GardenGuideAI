@@ -2,22 +2,19 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 01:27:08
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 22:06:09
+ * @LastEditTime: 2025-09-04 17:26:12
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/LoginPage.tsx
  * @Description: 登陆页面
  * 
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Pressable } from 'react-native';
 import { RootStackParamList } from "./(tabs)/mine"
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation, useFocusEffect, ThemeContext } from "@react-navigation/native";
+import { useNavigation} from "@react-navigation/native";
 import useStore from './store/store';
-import { User } from '@/constants/User';
-import { useCameraPermissions } from 'expo-camera';
 import { Login } from "../network/userApi"
-import { ThemedView } from '@/components/ThemedView';
 import { ThemedText } from '@/components/ThemedText';
 
 
@@ -31,7 +28,6 @@ export default function LoginPage() {
 
 
   const handleLogin = async (Email: string, Password: string) => {
-    // Implement your login logic here
     console.log('Logging in with:', Email, Password);
     const response = await Login(Email, Password)
 
@@ -48,7 +44,7 @@ export default function LoginPage() {
       navigation.goBack()
       // navigation.navigate('Mine')
     } else {
-      alert(response.message)
+      alert("用户名或密码错误")
       navigation.goBack()
       // navigation.navigate('Mine')
     }

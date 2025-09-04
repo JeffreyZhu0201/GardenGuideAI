@@ -1,21 +1,18 @@
 /*
  * @Date: 2025-09-01 21:35:23
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 21:52:00
+ * @LastEditTime: 2025-09-04 17:37:04
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/(tabs)/mine.tsx
  * @Description: 
  */
 
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import { ThemedText } from '@/components/ThemedText';
 import useStore from '@/app/store/store';
-import UserInfo from "@/components/UserInfo";
-import { Button } from "@react-navigation/elements";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { User } from "@/constants/User";
 import { ThemedView } from "@/components/ThemedView";
 import ToolCard from "@/components/ToolCard";
 import { MineAccountConstant, MineSettingConstant } from '@/constants/MineTools'
@@ -36,11 +33,9 @@ const blurhash =
 
 
 export default function MineScreen() {
-    const { setHeaderTitle, userInfo, setUserInfo, token, setToken } = useStore();
+    const { setHeaderTitle, userInfo, token } = useStore();
 
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Mine'>>();
-
-
 
     const [userEmail, setUserEmail] = useState("");
 
@@ -65,7 +60,7 @@ export default function MineScreen() {
 
     return (
         <ThemedView style={[styles.Container, { height: '100%' }]}>
-            {userInfo ? (
+            {token ? (
                 <>
                     <ThemedView style={styles.LoginRegisterContainer}>
                         <Image
@@ -77,7 +72,7 @@ export default function MineScreen() {
                         />
                         <ThemedView style={[{ flexDirection: 'column', display: 'flex', flex: 1, backgroundColor: 'transparent' }]}>
                             <ThemedText style={[styles.BoldFont, { fontSize: 26, marginBottom: 4 }]}>Hello,</ThemedText>
-                            <ThemedText style={[styles.BoldFont, { fontSize: 16 }]}>{userInfo.email}</ThemedText>
+                          <ThemedText style={[styles.BoldFont, { fontSize: 16 }]}>{userInfo?.email}</ThemedText>
                         </ThemedView>
                     </ThemedView>
                 </>

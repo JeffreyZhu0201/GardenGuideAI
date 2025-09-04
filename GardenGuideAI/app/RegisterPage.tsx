@@ -1,23 +1,20 @@
 /*
- * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @Date: 2025-09-01 01:27:08
+* @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
+* @Date: 2025-09-01 01:27:08
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 22:14:24
+ * @LastEditTime: 2025-09-04 17:58:01
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/RegisterPage.tsx
- * @Description: 登陆页面
+* @Description: 登陆页面
  * 
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved. 
  */
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Pressable } from 'react-native';
+import { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import { RootStackParamList } from "./(tabs)/mine"
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation, useFocusEffect, ThemeContext } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import useStore from './store/store';
-import { User } from '@/constants/User';
-import { useCameraPermissions } from 'expo-camera';
-import { Login, Register } from "../network/userApi"
-import { ThemedView } from '@/components/ThemedView';
+import { Register } from "../network/userApi"
 import { ThemedText } from '@/components/ThemedText';
 
 
@@ -37,16 +34,11 @@ export default function RegiterPage() {
 
     if (response.code == 200 && response.data) {
       console.log(response.data.token);
-      setToken(response.data.token || "")
-      setUserInfo({
-        email: Email,
-        password: Password
-      })
       alert("Registered in successfully")
       await new Promise(resolve => setTimeout(resolve, 1000));
       navigation.goBack()
     } else {
-      alert(response.message)
+      alert("Error Email Format")
       navigation.goBack()
     }
   }
@@ -69,7 +61,7 @@ export default function RegiterPage() {
         onChangeText={setCurrentUserPassword}
       />
       <Pressable onPress={() => handleLogin(currentUserEmail, currentUserPassword)} style={styles.buttonStyle}>
-          <ThemedText style={{color:"#ffffff",padding:12,fontSize:18,fontWeight:"600",alignItems:'center'}}>Register & Login</ThemedText>
+          <ThemedText style={{color:"#ffffff",padding:12,fontSize:18,fontWeight:"600",alignItems:'center'}}>Register</ThemedText>
       </Pressable>
     </View>
   );

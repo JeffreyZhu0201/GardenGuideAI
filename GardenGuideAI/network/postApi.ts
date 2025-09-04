@@ -37,7 +37,7 @@ function getMimeTypeFromFilename(filename: string): string {
  */
 export const createPost = async (payload: CreatePostPayload): Promise<any> => {
     const { email, content, imageUri, token } = payload;
-    const apiUrl = `${SystemConfig.GOBASEURL}/posts`;
+    const apiUrl = `${SystemConfig.GO_BASE_URL}/posts`;
 
     // Create a FormData object to build the multipart request body.
     const formData = new FormData();
@@ -85,7 +85,7 @@ export const createPost = async (payload: CreatePostPayload): Promise<any> => {
 }
 
 export const getAllPosts = async (): Promise<any> => {
-    const apiUrl = `${SystemConfig.GOBASEURL}/posts/allpost`;
+    const apiUrl = `${SystemConfig.GO_BASE_URL}/posts/allpost`;
 
     const ip = await Network.getIpAddressAsync()
 
@@ -101,7 +101,7 @@ export const getAllPosts = async (): Promise<any> => {
 
 
 export const getOnePost = async (postId: string,token:string): Promise<any> => {
-    const apiUrl = `${SystemConfig.GOBASEURL}/posts/getone?id=${postId}`;
+    const apiUrl = `${SystemConfig.GO_BASE_URL}/posts/getone?id=${postId}`;
     const ip = await Network.getIpAddressAsync()
     try {
         const response = await axios.get(apiUrl, {
@@ -119,7 +119,7 @@ export const getOnePost = async (postId: string,token:string): Promise<any> => {
 
 export const addLike = async (postId: string, token: string) => {
     // const apiUrl = `${SystemConfig.GOBASEURL}/posts/like?id=${postId}`;
-    const apiUrl = buildURL(`${SystemConfig.GOBASEURL}`,'/posts/like',{},{id:postId})
+    const apiUrl = buildURL(`${SystemConfig.GO_BASE_URL}`,'/posts/like',{},{id:postId})
     const ip = await Network.getIpAddressAsync()
     console.log(apiUrl)
     const response = await axios.post(apiUrl, {
@@ -134,7 +134,7 @@ export const addLike = async (postId: string, token: string) => {
 
 export const unLike = async (postId: string, token: string) => {
     // const apiUrl = `${SystemConfig.GOBASEURL}/posts/like?id=${postId}`;
-    const apiUrl = buildURL(`${SystemConfig.GOBASEURL}`,'/posts/unlike',{},{id:postId})
+    const apiUrl = buildURL(`${SystemConfig.GO_BASE_URL}`,'/posts/unlike',{},{id:postId})
     const ip = await Network.getIpAddressAsync()
     console.log(apiUrl)
     const response = await axios.post(apiUrl, {
@@ -148,7 +148,7 @@ export const unLike = async (postId: string, token: string) => {
 }
 
 export const getUsersPosts = async (email: string,token:string) => {
-    const apiUrl = `${SystemConfig.GOBASEURL}/posts/userposts?email=${email}`;
+    const apiUrl = `${SystemConfig.GO_BASE_URL}/posts/userposts?email=${email}`;
     const ip = await Network.getIpAddressAsync()
     try {
         const response = await axios.get(apiUrl, {

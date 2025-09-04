@@ -12,7 +12,7 @@ import axios from "axios";
 import * as Network from 'expo-network';
 
 export const createLike = async (email: string, postId: string, token: string) => {
-    const apiUrl = `${SystemConfig.GOBASEURL}/like/create`;
+    const apiUrl = `${SystemConfig.GO_BASE_URL}/like/create`;
 
     const body = {
         email,
@@ -36,7 +36,7 @@ export const createLike = async (email: string, postId: string, token: string) =
 }
 
 export const getUsersLikes = async (email:string,token:string)=>{
-    const apiUrl = `${SystemConfig.GOBASEURL}/like/getlikes?email=${email}`;
+    const apiUrl = `${SystemConfig.GO_BASE_URL}/like/getlikes?email=${email}`;
     const ip = await Network.getIpAddressAsync()
     try {
         const response = await axios.get(apiUrl, {
@@ -53,7 +53,7 @@ export const getUsersLikes = async (email:string,token:string)=>{
 }
 
 export const removeLike = async (id:string) => {
-    const apiUrl = `${SystemConfig.GOBASEURL}/like/remove`;
+    const apiUrl = `${SystemConfig.GO_BASE_URL}/like/remove`;
     const { token } = useStore();
     try {
         const response = await axios.delete(apiUrl, {

@@ -1,16 +1,15 @@
 /*
  * @Date: 2025-09-02 16:01:12
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 21:45:18
+ * @LastEditTime: 2025-09-04 16:39:18
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/LikePage.tsx
  * @Description: 
  */
 
 
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { View, Text, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import Card from '@/components/Card';
-import { getAllPosts, getOnePost, getUsersPosts } from '@/network/postApi';
 import useStore from './store/store';
 import { router, useFocusEffect } from 'expo-router';
 import { getUsersLikes } from '@/network/likeApi';
@@ -25,8 +24,6 @@ interface Post {
 }
 
 export default function LikePage() {
-    // 定义状态来存储数据、加载状态和可能的错误
-    const [postsList, setPostsList] = useState<Post[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const { token, setHeaderTitle, userInfo } = useStore()
@@ -45,6 +42,11 @@ export default function LikePage() {
             try {
                 setLoading(true);
                 setError(null);
+                if (!token) {
+                    alert("Please Login!")
+                    router.back()
+                    return;
+                }
                 const response = await getUsersLikes(userInfo?.email || "null", token || "null");
                 if (response) {
                     console.log(response.likes)
@@ -62,7 +64,7 @@ export default function LikePage() {
             }
         };
         fetchPosts();
-    }, []); 
+    }, []);
 
     if (loading) {
         return (

@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 00:44:51
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 18:54:48
+ * @LastEditTime: 2025-09-04 16:22:38
  * @FilePath: /GardenGuideAI/GardenGuideAI/constants/SystemConfig.ts
  * @Description: 系统配置
  * 
@@ -10,14 +10,13 @@
  */
 
 interface SystemConfig{
-    IMAGESOURCEL:string,
-    GOBASEURL:string,
-    IDENTIFYBASETURL:string
+    IMAGE_SOURCE:string,
+    GO_BASE_URL:string,
+    IDENTIFY_BASE_URL:string
 }
 
 export const SystemConfig:SystemConfig = {
-    IMAGESOURCEL:'http://192.168.0.163:8080/',
-    GOBASEURL:'http://192.168.0.163:8080/api/v1',
-    IDENTIFYBASETURL:"http://192.168.0.163:8000/api/v1"
-
+    IMAGE_SOURCE:'http://192.168.108.76:8080/',
+    GO_BASE_URL:'http://192.168.108.76:8080/api/v1',
+    IDENTIFY_BASE_URL:"http://192.168.108.76:8000/api/v1"
 }

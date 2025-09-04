@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-30 00:43:57
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 20:59:44
+ * @LastEditTime: 2025-09-04 17:24:37
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/_layout.tsx
  * @Description: 应用根布局
  * 
@@ -26,7 +26,6 @@ export default function RootLayout() {
   const { headerTitle } = useStore();
 
   if (!loaded) {
-    // Async font loading only occurs in development.
     return null;
   }
 

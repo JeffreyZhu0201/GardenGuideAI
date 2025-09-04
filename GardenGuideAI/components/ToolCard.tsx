@@ -1,25 +1,18 @@
 /*
  * @Date: 2025-09-02 14:44:38
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 20:16:11
+ * @LastEditTime: 2025-09-04 16:36:14
  * @FilePath: /GardenGuideAI/GardenGuideAI/components/ToolCard.tsx
  * @Description: 工具卡片
  */
 
 
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import { Pressable, StyleSheet } from 'react-native';
 import { Image, ImageSource } from 'expo-image';
 import { ThemedText } from '@/components/ThemedText';
-import useStore from '@/app/store/store';
-import UserInfo from "@/components/UserInfo";
-import { Button } from "@react-navigation/elements";
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { User } from "@/constants/User";
 import { ThemedView } from "@/components/ThemedView";
-import { IconSymbol } from "./ui/IconSymbol";
-import { RollInRight } from "react-native-reanimated";
 import { RootStackParamList } from '@/app/(tabs)/mine'
 
 const blurhash =

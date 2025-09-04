@@ -2,7 +2,7 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-09-01 00:37:35
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-02 01:25:20
+ * @LastEditTime: 2025-09-04 16:21:36
  * @FilePath: /GardenGuideAI/GardenGuideAI/network/userApi.ts
  * @Description: 用户api接口
  * 
@@ -11,8 +11,7 @@
 
 import { SystemConfig } from "@/constants/SystemConfig"
 import { UserConfig } from "@/constants/User"
-import { buildURL, joinRoutes } from "@/utils/utils"
-import { useInterpolateConfig } from "react-native-reanimated"
+import { buildURL } from "@/utils/utils"
 import * as Network from 'expo-network';
 import axios from 'axios';
 
@@ -24,10 +23,6 @@ interface LogoutData {
 
 }
 
-interface RegisterData {
-
-}
-
 interface Response<Type> {
     code: number,
     message: string,
@@ -36,7 +31,7 @@ interface Response<Type> {
 
 export const Login = async (userEmail: string, userPassword: string): Promise<Response<LoginData>> => {
 
-    const URL = buildURL(SystemConfig.GOBASEURL, UserConfig.LoginUrl, {}, {})
+    const URL = buildURL(SystemConfig.GO_BASE_URL, UserConfig.LoginUrl, {}, {})
     console.log(URL)
     const body = {
         email: userEmail,
@@ -50,14 +45,9 @@ export const Login = async (userEmail: string, userPassword: string): Promise<Re
                 'Origin': `http://${ip}:8081`
             }
         });
-        console.log(response.data);
-        console.log(response.data.code)
-        console.log(response.data.data.token)
-        console.log(response.data.message)
+        // console.log(response.data.message)
         return response.data;
     } catch (error: any) {
-        // console.error("登录失败:", error);
-        // throw error;
         alert(error)
         return {
             code: 400,
@@ -68,7 +58,7 @@ export const Login = async (userEmail: string, userPassword: string): Promise<Re
 }
 export const Register = async (userEmail: string, userPassword: string): Promise<Response<LoginData>> => {
 
-    const URL = buildURL(SystemConfig.GOBASEURL, UserConfig.RegisterUrl, {}, {})
+    const URL = buildURL(SystemConfig.GO_BASE_URL, UserConfig.RegisterUrl, {}, {})
 
     const body = {
         email: userEmail,
@@ -90,7 +80,7 @@ export const Register = async (userEmail: string, userPassword: string): Promise
 }
 export const Logout = async (token: string): Promise<Response<LogoutData>> => {
 
-    const URL = buildURL(SystemConfig.GOBASEURL, UserConfig.LogoutUrl, {}, {})
+    const URL = buildURL(SystemConfig.GO_BASE_URL, UserConfig.LogoutUrl, {}, {})
     try {
         const response = await axios.post(URL, {}, {
             headers: {

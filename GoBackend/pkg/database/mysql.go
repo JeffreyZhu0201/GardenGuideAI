@@ -2,12 +2,14 @@
  * @Author: Jeffrey Zhu JeffreyZhu0201@gmail.com
  * @Date: 2025-08-29 03:31:39
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 15:38:30
+ * @LastEditTime: 2025-09-04 14:16:06
  * @FilePath: /GardenGuideAI/GoBackend/pkg/database/mysql.go
  * @Description:
  *
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
+
+/* cspell:ignore gorm */
 
 package database
 

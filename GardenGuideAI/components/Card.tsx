@@ -9,7 +9,7 @@
  * Copyright (c) 2025 by Jeffrey Zhu, All Rights Reserved.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { View, StyleSheet, useColorScheme, Dimensions, TouchableOpacity } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { ThemedText } from './ThemedText';
@@ -60,7 +60,6 @@ const { width } = Dimensions.get('window');
 const Card = ({ id, email, image, content, like_count }: { id: string, email: string, image: string; content: string, like_count: number }) => {
   const colorScheme = useColorScheme() ?? 'light';
   const [clicked, setClicked] = useState(false)
-  const [delta, setDelta] = useState(0)
   const [likes, setLikes] = useState(like_count)
   const { token } = useStore()
 
@@ -73,7 +72,6 @@ const Card = ({ id, email, image, content, like_count }: { id: string, email: st
 
   const contentPreview = getMarkdownPreview(content);
 
-  // 动态样式
   const dynamicStyles = {
     cardBackground: {
       backgroundColor: colorScheme === 'dark' ? Colors.dark.card : Colors.light.card,
@@ -86,14 +84,14 @@ const Card = ({ id, email, image, content, like_count }: { id: string, email: st
       return;
     }
     setClicked(!clicked)
-    setLikes((likes == like_count)?like_count+1:like_count)
+    setLikes((likes == like_count) ? like_count + 1 : like_count)
     try {
       const response = await addLike(id, token as string);
       if (response && response.data) {
         console.log(response)
       }
-      const res = await createLike(email,id,token)
-      if(res){
+      const res = await createLike(email, id, token)
+      if (res) {
         console.log(res)
       }
     }
@@ -104,13 +102,13 @@ const Card = ({ id, email, image, content, like_count }: { id: string, email: st
 
   return (
     <Link href={{
-          pathname: '/DetailPage/[content]',
-          params: { content: content }
-        }}>
+      pathname: '/DetailPage/[content]',
+      params: { content: content }
+    }} style={{margin:6}}>
       <View style={styles.container}>
         <View style={[styles.contentWrapper, dynamicStyles.cardBackground]}>
           <Image
-            source={SystemConfig.IMAGESOURCEL + image}
+            source={SystemConfig.IMAGE_SOURCE + image}
             style={styles.image}
             accessibilityLabel="Card content image"
           />
@@ -121,7 +119,7 @@ const Card = ({ id, email, image, content, like_count }: { id: string, email: st
             <ThemedView style={{ flex: 1, marginTop: 32 }}>
               <Image
                 source={require("@/assets/icons/right.png")}
-                style={[styles.arrowIcon,{ position: 'absolute', right: 5 }]}
+                style={[styles.arrowIcon, { position: 'absolute', right: 5 }]}
                 accessibilityLabel="Navigate to details"
               />
             </ThemedView>
@@ -144,7 +142,7 @@ const Card = ({ id, email, image, content, like_count }: { id: string, email: st
 
 const styles = StyleSheet.create({
   container: {
-    margin: 6,
+    margin: 8,
     width: '100%',
     alignItems: 'center',
   },
@@ -163,7 +161,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    marginTop:6,
+    marginTop: 6,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',

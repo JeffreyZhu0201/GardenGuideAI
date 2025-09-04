@@ -1,17 +1,17 @@
 /*
  * @Date: 2025-09-02 15:59:13
  * @LastEditors: Jeffrey Zhu JeffreyZhu0201@gmail.com
- * @LastEditTime: 2025-09-03 21:14:04
+ * @LastEditTime: 2025-09-04 16:37:46
  * @FilePath: /GardenGuideAI/GardenGuideAI/app/HistoryPage.tsx
  * @Description: 账号页
  */
 
 
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { View, Text, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import Card from '@/components/Card';
-import { getAllPosts, getUsersPosts } from '@/network/postApi';
-import useStore  from './store/store';
+import { getUsersPosts } from '@/network/postApi';
+import useStore from './store/store';
 import { router, useFocusEffect } from 'expo-router';
 
 interface Post {
@@ -28,24 +28,28 @@ export default function HistoryScreen() {
   const [postsList, setPostsList] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const {token,setHeaderTitle,userInfo} = useStore()
+  const { token, setHeaderTitle, userInfo } = useStore()
 
   useFocusEffect(
-      useCallback(() => {
-        setHeaderTitle('History');
-      }, [setHeaderTitle])
-    );
-    
+    useCallback(() => {
+      setHeaderTitle('History');
+    }, [setHeaderTitle])
+  );
+
   // 使用 useEffect 在组件挂载后执行数据获取
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await getUsersPosts(userInfo?.email || "null",token || "null");
+        if (!token) {
+          alert("Please Login!")
+          router.back()
+          return;
+        }
+        const response = await getUsersPosts(userInfo?.email || "null", token || "null");
         if (response && response.data) {
           setPostsList(response.data);
-        //   console.log(response.data[0])
         } else {
           setError('Received invalid response from server');
         }
@@ -62,7 +66,6 @@ export default function HistoryScreen() {
     fetchPosts();
   }, []); // 空依赖数组确保此 effect 只在组件挂载后运行一次[6](@ref)
 
-  // 根据状态渲染不同的 UI
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -83,7 +86,7 @@ export default function HistoryScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {postsList.map((item) => (
-        <Card key={item.id} id={item.id} email={item.email} image={item.image_path} content={item.content} like_count={item.like_count}/>
+        <Card key={item.id} id={item.id} email={item.email} image={item.image_path} content={item.content} like_count={item.like_count} />
       ))}
     </ScrollView>
   );
@@ -94,6 +97,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     paddingVertical: 10,
-    width:'100%'
+    width: '100%'
   },
 });

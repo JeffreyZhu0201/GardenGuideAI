@@ -94,7 +94,7 @@ export default function PostScreen() {
 
 
     async function fetchDeepSeekStream(plantName: string) {
-        const apiUrl = SystemConfig.IDENTIFYBASETURL + '/deepseek';
+        const apiUrl = SystemConfig.IDENTIFY_BASE_URL + '/deepseek';
 
         const requestBody = {
             message: `你是一个专业的植物专家和种植爱好者，回答的${plantName}基本信息,生长属性,养护指南,以及意义或花语。只返回markdown格式回答,样式美观，适合阅读,适当添加表情,简短一点`,
